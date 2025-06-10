@@ -1,4 +1,57 @@
 import numpy as np
+# Auxilary functions
+def apply_bias_trick(X):
+    """
+    Applies the bias trick to the input data.
+
+    Input:
+    - X: Input data (m instances over n features).
+
+    Returns:
+    - X: Input data with an additional column of ones in the
+        zeroth position (m instances over n+1 features).
+    """
+    m = len(X)
+    X = np.c_[np.ones(m), X]
+
+    return X
+def compute_sigmoid(v):
+    """
+    Computes the sigmoid function for the input vector v.
+
+    Input:
+    - v: Input vector (m instances over n features).
+
+    Returns:
+    - Sigmoid of v (m instances over n features).
+    """
+    return 1 / (1 + np.exp(-v))
+
+def compute_cost(X, y, theta):
+    """
+    Computes the cost function for logistic regression.
+
+    Parameters
+    ----------
+    X : {array-like}, shape = [n_examples, n_features]
+      Training vectors, where n_examples is the number of examples and
+      n_features is the number of features.
+    y : array-like, shape = [n_examples]
+      Target values.
+    theta : array-like, shape = [n_features]
+      Model parameters.
+
+    Returns
+    -------
+    J : float
+      The computed cost.
+    """
+    m = X.shape[0]
+    h = compute_sigmoid(X @ theta)
+    epsilon = 1e-15  # to prevent log(0)
+    J = (1 / m) * (-y @ np.log(h + epsilon) - (1 - y) @ np.log(1 - h + epsilon))
+    return J
+        
 
 class LogisticRegressionGD(object):
     """
@@ -55,7 +108,17 @@ class LogisticRegressionGD(object):
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        # Data preprocessing
+        X = apply_bias_trick(X)
+        m, n = X.shape
+        self.theta = np.random.random(n)  # Initialize theta with random values
+        # Learning process
+        theta, j_history, theta_history = self.gradinet_descent(X, y, self.theta)
+        # Store the final theta and cost history
+        self.theta = theta
+        self.Js = j_history
+        self.thetas.append(theta_history)
+        
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -71,11 +134,38 @@ class LogisticRegressionGD(object):
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        X = apply_bias_trick(X)  # Apply bias trick to the input data
+        preds = np.round(compute_sigmoid( X @ self.theta)).astype(int)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
         return preds
+  
+    def gradinet_descent(self, X, y, theta):
+        theta = theta.copy() # deep copy in order to not change the original theta
+        J_history = []
+        theta_history = []
+        delta_J  = float('inf')  # Initialize J_delta to a large value
+        m = X.shape[0]
+
+        for i in range(self.n_iter):
+            h = compute_sigmoid(X @ theta)
+            theta = theta - (self.eta / m) * (X.T @ (h - y))
+            J_i = compute_cost(X, y, theta)
+            J_history.append(J_i)
+            theta_history.append(theta.copy())  # Store the current theta
+
+            if len(J_history) > 1:
+                delta_J = abs(J_history[i] - J_history[i-1])
+                
+                if delta_J < self.eps:
+                    break
+        
+        return theta, J_history, theta_history
+
+            
+         
+
 
 def cross_validation(X, y, folds, algo, random_state):
     """

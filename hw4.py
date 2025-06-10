@@ -199,7 +199,40 @@ def cross_validation(X, y, folds, algo, random_state):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    # Shuffle the data
+    indices = np.arange(0, len(X), 1)
+    np.random.shuffle(indices)
+    X = X[indices]
+    y = y[indices]
+   
+    # Create folds
+    fold_size = len(X) // folds
+    accuracies = []
+    
+    for i in range(folds):
+        # Create the start and end indices for the current fold
+        start_i = i * fold_size
+        end_i = start_i + fold_size if i < folds-1 else len(X)
+
+        # Split the data into training and validation sets
+        X_train = np.concatenate((X[:start_i], X[end_i:]), axis=0)
+        y_train = np.concatenate((y[:start_i], y[end_i:]), axis=0)
+        X_val = X[start_i:end_i]
+        y_val = y[start_i:end_i]
+
+        # Fit the model on the training set
+        algo.fit(X_train, y_train)
+
+        # Predict on the validation set
+        preds = algo.predict(X_val)
+
+        # Calculate accuracy for this fold
+        accuracy = np.mean(preds == y_val)
+        accuracies.append(accuracy)
+    
+    # Calculate the average accuracy across all folds
+    cv_accuracy = np.mean(accuracies)   
+    
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -221,7 +254,7 @@ def norm_pdf(data, mu, sigma):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    p = np.exp( -(((data - mu) / sigma) ** 2) / 2) / (sigma * np.sqrt(2 * np.pi))
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################

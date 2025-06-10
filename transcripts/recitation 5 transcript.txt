@@ -1,0 +1,704 @@
+
+Guy Assa: So today we would do
+0:18
+Guy Assa: And in more specific feature selection. I know that yesterday you did something else. Did kernels right
+0:26
+Guy Assa: great, so we will do it next reservation.
+0:35
+Guy Assa: We will do it with the Svm itself, because it's directly connected, so we will do it next lesson. But now, we want to focus on different subject. Okay? So up to now.
+0:38
+Guy Assa: we've learned different models. Right? We did a linear models, regression models and classifier models like logistic regression,
+0:51
+Guy Assa: linear regression, and so on and so forth. And now we want to stop for a minute with the models. We will be back to models. Later we will learn 2 or 3 more models later on this course.
+1:03
+Guy Assa: But we want to talk about the data a little bit and how to process it and
+1:19
+Guy Assa: how to in more specific, how to select features. So let's dive into the class, and we'll see what we have today. So
+1:25
+Guy Assa: we will learn what is footless selection, why we need it, and then we will handle over fit. We'll talk a little bit more about overfit, and how we can deal with it with 2 different tools we have which one is cross validation and the other is regularization.
+1:34
+Guy Assa: Okay? So why we need to reduce the dimension. So just to remind you that the dimension is the features they have. So
+1:52
+Guy Assa: if I have just 2 features x, 1 x, 2. So I'm in 2D. But if I have 100 features, let's say I want to estimate the price of the house, and I can have up to. I don't know 100 features which it can be. What city, what floor, what is the size of the house? Maybe the street, and the number of the house, and so on and so forth. So I can have a lot of features. And if I have a lot of features.
+2:03
+Guy Assa: it's really complex, right? The computation I need to to calculate, for example, the gradient descent on each feature. It takes a lot of time if I have 100 features, and some of them might be not useful
+2:30
+Guy Assa: for some reason, so I maybe can reduce them or eliminate them, and then it will be easier. So
+2:44
+Guy Assa: if I I will reduce the complexity, the space. It will take me less computation, less computation, less parameters, and will be easier. Another reason is the perspective of the model. If I have, for example, and we will see an example. So if it's not clear, so we will make it clearer if we have
+2:52
+Guy Assa: scattered data, so high dimension will harm and will affect negatively. We will see it in a minute.
+3:14
+Guy Assa: But if we're reducing the space, so it's more interpretable. For example, if I'm using only the size of the house to examine the price, it's much easier than the size of the house and the street, and the number, so on and so forth. It's much easier to inter interpret the model and the results. So it's more expensive.
+3:23
+Guy Assa: Hey, Guy? If if I, for example, I have more parameters or more features.
+3:45
+Guy Assa: Can I reach to
+3:51
+Guy Assa: a false classification like, for example? Yes, it's it's exactly overfit, and we will talk about it in a later on.
+3:54
+Guy Assa: If you're doing too much specific for the data, you're selecting too many features. So it's too specific for this data. It might affect the test set that you're trying to.
+4:04
+Guy Assa: and we will talk about it later. But it's a good point. You can also think of it. Maybe just a question. Maybe you could think of it that some of the features are just noise and not really 6. Some of them may be noise like we saw in decision trees. When we have the Id
+4:16
+Guy Assa: and the id for each person we have its own id, so it will split the tree to unique persons. But I can't predict using Id, so it will be over. So we would say similar example. So for example, we have this small, tiny toy example. So one of you can tell me. If I want to reduce, let's say one feature. Which of them I will reduce? Which of them. It's it's
+4:34
+Guy Assa: or which of the 2 features maybe have similar something, or
+5:06
+Guy Assa: one and 4, exactly one and 4 they are, although the scale is different.
+5:12
+Guy Assa: but the relationship between one to the label and 4 to the label, it's exactly the same. So if I normalize one, and if I'll normalize 4, I will have the exact same feature right here the maximum will be 50, and the
+5:19
+Guy Assa: minimum will be 5, and here it will be 5 and 0 point 5, and the scale will be exactly the same. And then they're basically the same. It's like, it's like asking you. I have data, and I have my height in feet and my height in meters, which they're practically the same, but different scale. Should I use them both? No, because they're the same, so I can eliminate one of them, and my result will be the same. So in this example I can reduce one. Space
+5:37
+Guy Assa: doesn't matter which one of them, and you will stay with 3 features, and then you can predict it better if this one was not 10. But let's say 6 or 11. So then it wasn't that straightforward? Maybe I can reduce it. Maybe not. It depends. But if they are exactly the same, I can eliminate one of them, because it's not adding any information.
+6:05
+Guy Assa: Okay, another reason. So this was one of the reasons. So we have a perfect correlation. Want to produce one of them. But another reason why we want to reduce the space space equals the number of features
+6:29
+Guy Assa: is, we can call it the cures of dimensionality. So we will see here another toy example, so it won't be with numbers and really accurate. But it's just to capture the the idea. What is cures of dimensionality. So let's say I have 6 points, and each one of them has only 2 features.
+6:43
+Guy Assa: If it's bluish, like almost blue, or if it's reddish like, has color of red, so we can see it gets only one or 0. So we have only 2 features. So if I want to classify the the points that we'll see here accordingly. This is a really common example. You can see it in.
+7:04
+Guy Assa: and many variations. So we will see now each point, and it will go rather to more red or blue. It depends on the color. I hope you. You see, they have a little bit different. So this red is not exactly like this red. This blue is not exactly like this one, but when I have only 2 features they're clustered to the same place on the graph. And I can say, Okay, you are bluish, you are reddish, and you are together.
+7:21
+Guy Assa: But what will happen
+7:47
+Guy Assa: if I'll have more pictures? Right? So this.is dark red, so it's like one hot encoder, because it's not red. It's not light red. It's exactly red. So I added, more features. So now
+7:49
+Guy Assa: we will try. We will do it like 2 dimensions. But actually, I have 6 different dimensions. So every point we go to really
+8:02
+Guy Assa: a distinct place in the graph.
+8:12
+Guy Assa: But if I'll reduce it to 2 graphs, so it will look something like again. It's just, for example, it will look something like this classification, right. Everyone is going to different place because they are distinct from another. They're not sharing anything.
+8:15
+Guy Assa: And now I have 6 different clusters, and I don't. I don't have the ability to cluster them, really, because they're really separate because they have too much, too many dimensions. Okay, so to have too many dimensions when my data is spar.
+8:30
+Guy Assa: It's really hard to do classification, and we'll see in a minute another example that will show the same. But this is the curse of dimensionality. As we have
+8:46
+Guy Assa: more dimensions, we need more examples. And it's really
+8:55
+Guy Assa: it's really a problem. So why reducing. So, as we said, the cursor dimensionality cause the data to be spar in high feature space, and we want to maintain the density in order to be able to predict something. We want to maintain the density in each
+9:01
+Guy Assa: place to be able to to say something.
+9:19
+Guy Assa: So let's see an exam. So okay, so we have some
+9:21
+Guy Assa: the best, the peak the best point, with regards to dimensions, to the features and the performance. And this one is not general for any data for each data we have the peak where too much dimension. If I'll add more dimensions, the performance will decline because the data will be spar. Okay? So we don't want as many features as possible. But we want to get to the optimal place. So let's see another example.
+9:26
+Guy Assa: Let's see, let's say we have this simple data, and we have only one feature. Okay, we have 3 class. We have the red class, the green class and the blue class.
+9:55
+Guy Assa: and we will divide the X into subsections such that we'll have 3 examples in each one, because we want density right? If it if it was too small. So there was Chunk that there's nothing here, and I can't predict it's all. I will divide it into parts that I have 3 examples in each one of them
+10:05
+Guy Assa: and 3. It's let's say it's enough. Now I want to predict. So if I want to predict a new point, I'll simply ask the new point in which bin you are, and then I'll do majority vote right here. It will be
+10:25
+Guy Assa: the blue here it will be the grand, and here it will be the red great.
+10:36
+Guy Assa: However, this is not a great example, because I have a lot of intersection and overlap, and maybe this is my train. But wait. But test will be a lot of green here and a lot of blue here. So it's not that good. So maybe I will add another feature, and I'll have more information right? So it would be better
+10:40
+Guy Assa: so. I will add another feature
+10:58
+Guy Assa: as here. Great! I added another feature. Now there are more sparse, so now, if it will land here. I will predict blue here, green. What will happen if I'll see point here? I'll have no.
+11:01
+Guy Assa: I will not be able to classify it, because I have nothing there right. But if I want to preserve the density as before, I need much more samples in order to have the same density as before. So as we go in space, as we increase the space, we need much more samples. So if I want to preserve the 3
+11:14
+Guy Assa: samples in each bin. So here I need at least 3 multiplied by 9, so 27, at least 27 samples to see
+11:36
+Guy Assa: 3 in each.
+11:45
+Guy Assa: and if we increase it even more. For example, 3D. We'll add another feature. So now it's much more spar. And you know, in order to be able to see in each point 3 samples, we need at least 81 points now 27 times 3.
+11:48
+Guy Assa: Okay, so as the feature space and the dimensionality increases, we have to see much more samples in order to be able to classify them. Okay? And it's really a problem
+12:08
+Guy Assa: when we go in really high dimension. So in your data when you're handling it, it's not a problem, because usually you have up to 10 features and you have. I don't know 1,000 samples. So it's not a problem. But sometimes we are handling situations when we have only 10 patients. And we have
+12:21
+Guy Assa: 2,000 2,000 genes, for example. So it's really spar. The data is really spar one from another. And we need
+12:38
+Guy Assa: some metrics, some methods to be able to reduce the space and to be able to work with it. In a better, better way. Okay, so this is the
+12:47
+Guy Assa: the example of why, when we are increasing the space, we having a problem. So it's not always true. Because if we have tons of samples, so it's okay. But it gets to a point that we need
+12:58
+Guy Assa: more samples that we have. And then the performance reduced. Okay, so it's exactly the point we're looking for this point or the optimal point, as we've seen here, and it really depends on the data, how many samples you have, how many features you have, and so on. So this is a general graph.
+13:11
+Guy Assa: and we want to reach to the to the best, the best point.
+13:31
+Guy Assa: Okay, so we have
+13:35
+Guy Assa: 2 kind of process that we can reduce the space. One of them is feature selection. This is what we do today, which is simply in a if we try to simplify, it's taking the M features and reduce them to M features. I will somehow do some reduction to the space, but I think in in 2 or 3 weeks we'll do feature extraction, which is taking the original feature and do something
+13:38
+Guy Assa: on them and get new features which they're not the same. For example.
+14:08
+Guy Assa: it's not what we will do. But if you want to get the notion, I'll take x 1 and x 2, and multiply them, and I'll get new one, which is not x 1 and not X 2. It's something new.
+14:13
+Guy Assa: Okay? So we will do something on the features, and we will get new space, and we will handle it in the future. Not. Now.
+14:22
+Guy Assa: now we're focusing on the much more, maybe intuitive one which is selecting subset of features.
+14:31
+Guy Assa: Okay, so we want to find a way to select features in a reasonable time. So if I have, let's say, 100 features.
+14:39
+Guy Assa: any combination can be the best right. Maybe one of them is the best, but maybe 99 of them is the best, or maybe 50 is the best, but which 50.
+14:48
+Guy Assa: So if I need to go over all the combinations it will be. It will take me
+14:56
+Guy Assa: 2 to the power of 100 or a lot of time. So I don't want to go on every combination and search everyone one by one. I want some methods
+15:02
+Guy Assa: that some of them are greedy and some of them are not optimal, but they are suboptimal. That will lead me to the best
+15:12
+Guy Assa: features they can get in polynomial time. Okay, so it's not the best features I can get, but it's good enough exactly. It's good enough. It's the trade off between. The performance like, how how much time I want that the algorithm will run and the selection of the features. So we have
+15:19
+Guy Assa: 3 kind of feature. 3 kinds of methods approaches. One is wrapper. Why, it's filter, and better that we go, we will dive into each one of them.
+15:40
+Guy Assa: So let's start with the wrapper. So let's say we have n features and say that we have to, to the power of and possibilities
+15:51
+Guy Assa: to select a subset of features out of all of them which is not visible, because if I have 100 features, which is not
+15:58
+Guy Assa: a really large number in in the real real world data, 100 features. It's quite as small, as a matter of fact. So to the, to the power of 100. It's too much, and I can't look for all the possibilities. And so I need to to find something. So we will do something greedy. So the wrapper is a greedy method
+16:07
+Guy Assa: to find in polynomial time the best or the really best set of features.
+16:29
+Guy Assa: okay, so you want at the end. You want the
+16:37
+Guy Assa: some specific number. You cannot go through all the option. You need like to choose the best 5 or the best 6 exactly, or exactly so I can say, or that I want the best
+16:42
+Guy Assa: M out of all the features, or I can say up to some performance, so I can limit it by
+16:56
+Guy Assa: different ways. But yes, for let's say, for example, I have 5 features, and I want only 3, so until it will get to 3. So do some process until it will get to 3.
+17:03
+Guy Assa: Okay, so let's start with the most intuitive one. So if I have, for example, 5 features.
+17:14
+Guy Assa: so we did in exercise one exactly. You did in exercise one, and the label so in exercise one, you started with no features with empty set, and now in each iteration you checked
+17:20
+Guy Assa: each one of them separately.
+17:34
+Guy Assa: with relate to the label how they classify it. Right? So we did it in the we can. The the most intuitive example is with the decision trees we can split. For example, X, if I have here. Let's say 0 or 1 0 0 1 1. And here I have 0 0 1 1 1, and the label will be a, a.
+17:37
+Guy Assa: BBA. So now I can calculate the accuracy of splitting them right, because this one I will split
+18:01
+Guy Assa: according to 0 and one so I have. I can calculate the accuracy, and I can calculate the accuracy here and here and here and here, and select the the feature that will result the best accuracy. Okay, so the accuracy doesn't have to be accuracy, as as we're showing here, it can be any metric you want.
+18:10
+Guy Assa: But this is for this example. So let's say that the best accuracy is feature. 2. So now I selected in my subset I have x. 2.
+18:29
+Guy Assa: And now I will continue, because, I said, I want to choose 3 out of 5. So I selected 2. And now I'm doing it again. But now, taking x 2 and x 1 and x 2 and x 3 and x 2 and x 4, and x 2 and x 5, and see what's the best. And now I get the best of x 2 and x 5 and x 4. And now I'm doing it again. Iterate again, and redo
+18:41
+Guy Assa: both of them with x, 1, both of them with x 3, and both of them with x 5, and I'll get eventually. The best set
+19:05
+Guy Assa: is reset out of them. Okay, so
+19:12
+Guy Assa: this one is the best set. If I did really in this process, it doesn't mean that this is the best set ever. Okay, maybe something in the data happens to be that this is the 3 best best features if I would do it exhaustively if I check every one of them. But I can't do it. It takes a lot of time with a lot of features. But exhaustively I got this result.
+19:18
+Guy Assa: And most of the time it's it's good enough. Okay, most of the time. The result of this is good enough, and I can continue with it. But just it's important to bear in mind that it's not always the best of the best, not always the case. But here. But here, in this example I have x 2 x 4 and x 5. And if I saw that x 2 and x 3 and x. 4 is better than
+19:43
+Guy Assa: those 3 I would choose.
+20:11
+Guy Assa: But you can't know, because in order to know that this is the best, you to go over all options, and if you have 5 features it's okay. But if you have 1,000 features you can't go over all combinations, because it's it's too much. You're paying too much time
+20:14
+Guy Assa: to go over all sets. So I mean, it's gonna take like a million years. Yeah, something like this. Yes, so you can't really do it exhaustively. So you need to. So metric. And here it's really, really one which is not the best, but in practice it works so practice
+20:29
+Guy Assa: it gives you, if not the best features somewhere close to it will be in
+20:49
+Guy Assa: complexity here if you want. If you have end feature, and you want to select m feature. So that's n times, M, that's-, that's the time complexity here. And yes.
+20:55
+Guy Assa: exactly.
+21:06
+Guy Assa: And although each- each iteration is reduced by one. So it's yeah, it's a, it's a yeah, it's.
+21:07
+Guy Assa: And the second most popular method in this way, which is the opposite, is backward elimination or backward feature selection. We start with all of them. And now
+21:15
+Guy Assa: for the 1st iteration, I will look at only 2, 3, 4, and 5. This is the 1st iteration, and then I will do 1, 3, 4, 5, and then the next iteration, 1, 2, 4, 5, and I will check all the sets when I'm limiting one, and then I will get the best set is, let's say, x 2 x 3 x 4 x 5. This was the 1st iteration.
+21:27
+Guy Assa: Now the second iteration. I'm eliminating 1st this and then this, and then this, and then this, and I will get the the best one will be 2, 4 and 5.
+21:50
+Guy Assa: Okay, so most of the time, not all of the time, not most of the time. Don't want to say most of the time. Some of the time it will result the same, the same set, but not all of the time. It really depends on the data. So if you take really simple data sets, it probably will be the same because they're capturing. They're taking the the best features, and sometimes they have features that affecting more. But if we have little bit more complex data sets.
+22:02
+Guy Assa: It's not always resulting the same set of features. So there is no like magic. I can't say. Always use this one or always use this one. It also depends if you have 1,000 features and want 5, or if you had 1,000, and you want 900. So it's always also depends, like on the size that you want. And but this
+22:28
+Guy Assa: and 2 methods are equivalent, and they we use it interchangeably.
+22:50
+Guy Assa: We have another method which called recursive feature selection, which is quite similar to backward, but instead of reducing in each iteration one, we removing in each iteration n.
+22:57
+Guy Assa: and lowest importance, which? What is the lowest importance? It's some kind of metric. Okay, that I can. Look at it in 2 different metrics, or, for example.
+23:12
+Guy Assa: when it depends on the model, like in Junior Entropy and decision trees, or something, it is agnostic to the model which we'll see later. So we have another method. So just for you to know that there are a lot of methods. Another, we have here more examples for methods.
+23:23
+Guy Assa: So for example, we can go greedy on part of the space but exponential on the other space. For example, I can say that these 2 I know. I don't know how I know, but I know that these 2 are really important. So I want to
+23:39
+Guy Assa: maybe do it exhaustively, and look which one of them is really important. But these 3 are not that important, so I can go greedy over them. So maybe try this one with all these 3 and this one with all this. Yeah, maybe you know that the space of the size of the apartment is really important. So you want to keep it and the other are greedy, so maybe choose one and try all the options of this with greedy of this like
+23:54
+Guy Assa: so you can, or you can do something that is hybrid. For example, Ed.
+24:20
+Guy Assa: go forward for L steps and go reverse
+24:25
+Guy Assa: and reduce like a I'll do forward for 2 steps, and re and backward for 3 steps, and then I will go like
+24:30
+Guy Assa: backward and forward, and we'll get to some subspace. That is both.
+24:38
+Guy Assa: I can do bidirectional, which is, and each each iteration. I'm deciding you to add one or to subtract one, or I can go random and just say, Select set of features great, let's say 10 features great. Now dump them, select a different and do it 1,000 times.
+24:44
+Guy Assa: and the one that gave you the best accuracy selected. Okay, so we have many ways to select the subset of features
+25:02
+Guy Assa: forward record, and we have also some kinds of combinations between them.
+25:15
+Guy Assa: Yeah, feature, importance, or something. Yes, also in in, forward and backward. You have some kind of feature importance which is accuracy to select them by the accuracy how to
+25:22
+Guy Assa: So you have under the wrapper you have many, but the most important to to keep in mind is the forward and backward, and then you have some kind of some metrics that combine them or random.
+25:35
+Guy Assa: Okay, so this was the rubber. Now for the filter.
+25:48
+Guy Assa: we're doing something that is a little bit agnostic to the model, which mean we doesn't. We don't care about the model itself.
+25:53
+Guy Assa: So in some sense they are independent to the learner. Okay, I don't care which learner you want. I'm doing something else. Okay? So we will see in a minute example. But what is the drawback? Why, it's not good, because sometimes there is a relation between the feature and the classifier, because in some way, maybe, I'm doing a linear regression. So this feature is better. But if I'm doing a logistic regression, this feature not affect that much.
+26:00
+Guy Assa: So this is, in a sense not good. But the advantage is that I can do this process and then try different levels. And I don't need to do feature selection every time again. Right? Because if we're doing feature selection, it depends on the model. For example, if I'm doing decision trees. It's here. So I picked decision trees to select my features. But if I'll do linear regression I might get differences.
+26:28
+Guy Assa: But here I'm not using any anything that relate to them today. And then I can do, basically, I can use this, the set they select to whatever I want.
+26:52
+Guy Assa: So what are the examples. So the most popular things are correlations. So, for example, I can check the correlation between x 1 in the label and x 2, and the label, and x 3 in the label, and so on, so forth, and take the and eliminate the one with the least correlation. Okay, so
+27:04
+Guy Assa: no, the 0. Like when you have no, yeah, absolutely
+27:24
+Guy Assa: when you have no correlation. So this feature doesn't like, for example, if all of this was 0, so I can eliminate x 1, because it doesn't tell me anything about the label. Okay? So I can eliminate them. Maybe I can. Also, it's not written here, but I can also see if I have like 2 features, that they have the same similarity as the targets. I maybe can eliminate them as well, because they're not adding any information.
+27:31
+Guy Assa: So we have 3 most common correlations that 2 of them, you know, and the other one, which information is entropy. It's something like this. Yes, it's similar to yeah.
+27:55
+Guy Assa: So the personal correlation. So we just go over it really quick. So it's basically trying to capture the mutual standard deviation, the mutual relationship between of them divided by the sigma of each one of them. So you've seen before. So if we have
+28:10
+Guy Assa: equal to one, so it's perfect positive correlation. If it's equal to minus one, it's perfect negative correlation. If it's equal to 0, we will basically see a cloud when there is no correlation between of them. Linear correlation, very short example. We will go briefly over it. So if we have this data
+28:33
+Guy Assa: so to calculate, we want to calculate this. So we will 1st calculate the average or the
+28:53
+Guy Assa: expected yeah, the expected of x, the expected of y, and then we can calculate this term this term for each point, and we get that the Pearson correlation is 0 point 2 5. Should I keep it, should I? Should I not? It depends on your experiment, your knowledge, your other features. So on and so forth.
+29:01
+Guy Assa: Okay, so. But if we have, for example, this example, so we have 4 different correlations, which are 4 different features which the values are different, but the correlation is the same. So again, if you have all these together, okay, here, it's just example
+29:27
+Guy Assa: of separate data sets this data set and this one and this one just to show you that they have the same correlation, although the numbers are different, and it's exactly as example number one. But if you have them all together, for example, so you might decide to eliminate
+29:46
+Guy Assa: 2 of them, or some you'll say something that, like the the data, is corrupted because
+30:03
+Guy Assa: can't be that they have exactly one feature that is
+30:08
+Guy Assa: the opposite of the another. So I don't know. But here it's just to show you that different data sets can lead to the same results. And we can see it by scaling right? It's the scale of the one of another.
+30:12
+Guy Assa: the problem with Pearson correlation as we talked in the statistic course that it's only capture the linearity of the data. So here we can see the data is
+30:29
+Guy Assa: pretty much linear. But here we can see that it's not linear. It's something like parabolic. And we also know that the person correlation is really affected by outliers. So I wanted that the line will be exactly here. But I have outliers. So it's up here, and I want here that the line will be exactly here. But I have outliers. So it looks like this.
+30:39
+Guy Assa: So it's not always the best. And if I know that, for example, my data have a lot of outliers or it's not linear. So I might use Spearman correlation. Right? So, for example, Spearman correlation here will give me a high correlation. But Pearson will give me something like this or this, or give me a quite low correlation. So it's not that good for
+30:59
+Guy Assa: in the spearman, I just remind you, it's about the rank. Okay, it's taking the rank of the dots, and it doesn't care about the
+31:24
+Guy Assa: actual value also. Yes, I use canva.
+31:31
+Guy Assa: Yeah, it's Calendar and Spearman. It's it's a different way. Different metrics. But they're all they both looking at the rates.
+31:37
+Guy Assa: So the Pearson correlation can. The spear correlation can be between one and minus one, which is the same, if it's 1, it's perfect correlating in the rank, if it's minus one, it's have a negative, perfect correlation. So this is the same example as we've seen with the Pearson.
+31:45
+Guy Assa: so we need to rank them pay from high to low, from low to high. So I rank here. The minimum is one, and so on and so forth. And then here I'm not ranking. I'm keeping it as it is. And now
+32:04
+Guy Assa: I can calculate with the formula and get that. The Spearman correlation is this one? Right so. And now, I can filter using this, say, Okay, if it's smaller than 0 point 5, I will drop this.
+32:19
+Guy Assa: if it's between 0 point 5 and 0, I will drop this feature I don't need. I want to skip.
+32:36
+Guy Assa: What is the formula that you use for the experiment? We have some formula. It's not that important. If you have today, it's a simple formula, just plug in the numbers there.
+32:42
+Guy Assa: It's a simple one, but they cannot use the rank correlation into Pearson formal? No.
+32:55
+Guy Assa: no, this this one is different. The the formula for here is completely different than this field.
+33:03
+Guy Assa: But it's a straightforward, and if we will.
+33:09
+Guy Assa: I think, in the exam. We don't have it. Just you need to understand the the that we have another correlation metric to- to do the calling
+33:12
+Guy Assa: great.
+33:22
+Guy Assa: So we've seen Ramper, which was forward or backward feature selection. We've seen the filter that we are reducing features using
+33:25
+Guy Assa: a correlation or different metrics that it's not related to the, to the learner itself. It's agnostic to the model.
+33:35
+Guy Assa: and we have the last one which called embedded, which simply do the process of feature selection during the learning process. Right? The most straightforward example is a decision to
+33:43
+Guy Assa: and we we saw it. We we saw it in each step of the decision trees. We're choosing the best feature.
+33:56
+Guy Assa: so it can be that we have 100 features, and the 3
+34:02
+Guy Assa: used only 15 of them. But we didn't tell him like, Choose 15 or I don't know. Look at about the correlations between the feature. You just stop because doing it inside the model, hey? Uses use it inside the model. And this is how we choosing the best features and reducing the the other space. Okay, so we have more examples, but they're less important. But we have the embedded, which is happen inside
+34:06
+Guy Assa: the model itself. Okay. During the run it selects the features
+34:32
+Guy Assa: great. This is the only 3 types, I mean in each type we we saw the options, and for the embedded guy, I will use the loss function
+34:38
+Guy Assa: to to measure to measure it depends. It depends which metric you're using. And what is the process you're doing so for here it would be the goodness of split as we've learned you can. You can use in goodness of split entropy or G and E. But if you're doing different algorithms, you will use the
+34:50
+Guy Assa: metrics they are using great. So
+35:09
+Guy Assa: we finished here, and as you saw it in the in the homework one you use feature selection. There there might be. I don't know if you have more feature selection in the in the future task.
+35:16
+Guy Assa: But this is the method, and we use it a lot. The feature selection. We use it
+35:30
+Guy Assa: almost every time you do your new algorithm you use.
+35:37
+Guy Assa: Okay, now, we're going to somewhat related topic which is called overfitting. And, as you said in the beginning, one of the reasons to reduce space is to avoid overfitting. It's not the only
+35:43
+Guy Assa: not the only thing that's causing the overfit. But it's 1 of the reasons. So just to make sure, we all understand what's overfit. So if this is the data, we can see that we have some shape here of a parabolic shape. So this is because it's not capturing the full spectrum of the data.
+36:00
+Guy Assa: And this is over with, because it's going too much over all the points. And what's happened here? This is over the test, the training. So- so this is training. And now, if you'll see a points in the test.
+36:20
+Guy Assa: So here it might be more like this shape, so it will be a big error here it will be. Maybe the O will be the smallest, because it's capturing the the real data. And here also it will be a really big error, because the points, for example, if I have point here, which is, I probably have. I will classify it as this value right? And the error will be high. So this is an overfit when we're going too much over the train. And the test is not that good?
+36:31
+Guy Assa: Okay? So in more
+37:01
+Guy Assa: variable words, the overfitting is happens when the model learns specific details and also the noise, because in every every data set we have also noise over the train data. But when we're inserting a new data points. It's impacts negatively, and the performance is reduced
+37:04
+Guy Assa: an important 2 important terms that it's good to know in the world of performance is bias and variance. So balance, it's not exactly like the balance we we've learned before in statistics. And these terms are used to evaluate models in sense of error. Okay, in sense of of overfit or underfit. So
+37:27
+Guy Assa: in supervised learning, we want to get, we predicting the expected value. And we want to get the arrow as small as possible, right? It doesn't matter which model we are doing. We want to get the arrow as small as possible.
+37:54
+Guy Assa: but there is some kind of trade off between the train and the test. We're getting some kind of of trade off, because if we will do too good on the on the train, we will lose something on test and the opposite right? So we have the trade off.
+38:07
+Guy Assa: So basically, the bias, the term of bias saying how much
+38:22
+Guy Assa: error we have on the train and the variance. It's how much, but how much error we have on test. So this is the bias and the variance. This is the general definition, and in more specific the bias is the difference between the average prediction
+38:28
+Guy Assa: of our model and the true value which is exactly like if I have a prediction, what is the average prediction from the true value and the variance is measure, the variability of what of the predicted values for a given in. So we'll see an example. Now. So let's say, this is our data. This is out of statwest.
+38:47
+Guy Assa: and someone wants to see it. So let's say that we have this data. The best, or the real world, or the best line, is this one. This is F of X. This is the real word that we want to capture. Okay, and we have the train data set. And we have the test.
+39:08
+Guy Assa: Now, we want to predict this F of X, right? We don't have it. We want to predict it. We want to get the F head of it. And we use linear regression or some other regression technique.
+39:24
+Guy Assa: So for the bias, I'm looking only on the train, right? So these 2 are options for me to for my predictor for the one I'm trying to predict. So this one won't be that accurate on the train. Right? They have arrows here. I have Arrow and L, so this one will be high bias.
+39:39
+Guy Assa: right? Because the arrow on the train is somewhat high. And it's saying that the model is too simple. Right? It's simply a line. It's too simple. It's not capturing all the weird shapes that might be here. And this is
+39:59
+Guy Assa: here. The bias is 0. Because I have perfect classification.
+40:14
+Guy Assa: It's good, it's not. We will see in a minute. Maybe maybe it's good exactly. But here I have 0 bias. So it's maybe great and officially, like mathematically. The the equation is this one of the average prediction from true value squared.
+40:18
+Guy Assa: And now on the variance. So if I have the same line, or that we've seen
+40:38
+Guy Assa: right now, if we have the same line here and the same line here, so we can see that here. Yes, we have some, but it's not big as here. Here. The L are much more significant. We have this, this and this, and so here the L is much significant. So, although we had really small bias here, which was 0, the variance is really high.
+40:45
+Guy Assa: and here we had a high, somewhat bias. But the variance is smaller than here. Okay, and this is the term, the mathematical term of the variance. So if we have high variance, as here, we overfit it, we hit some overfit on the data before. And now it's not really representing the test. So we are in a problem. So we want to get to a situation when also the bias and also the variance are as small as possible.
+41:06
+Guy Assa: Okay, so
+41:34
+Guy Assa: if we look at this example, I really like this picture and took it from somewhere. There you have the credits.
+41:36
+Guy Assa: So if you're looking at the error, the error, the final error. So we have the error on the train
+41:43
+Guy Assa: the error on the variance and some irreducible error, right? Because I can't capture the entire world. For example, here, if this is the true, I have some errors here that I can, I cannot eliminate them with my model. So I have irreducible error.
+41:49
+Guy Assa: So if we look at this diagram.
+42:06
+Guy Assa: so let's say, I want to classify this new, this new.so this irreducible L that I can't get
+42:08
+Guy Assa: too close into it right? I want to hit the target right here. But I can't go closer to this one, because I have illusible error, as we've seen right now. So the bias, if we want to interpret in in the diagram. The bias is like to shooting the the the center of where I can hit.
+42:16
+Guy Assa: which is this one, and the- the distance from the from the
+42:37
+Guy Assa: correct point, right? Because it's exactly like the distance between the correct point to what I'm trying to estimate and the size of the of the circle. That's where where I can hit is the variance. It's I can hit in this
+42:43
+Guy Assa: in this variety of space. Okay, so this is a somewhat trying to explain it, and if we want to reach the best point, we want to find some place that the variance
+42:58
+Guy Assa: is somewhat low, but not too low, because if it will be too low, so okay, the circle will be small. But we will be really far, because we said, we have trade-off between the bias and the so the bias will be really high, and we will hit really far from the red circle. And if it will be with low bias.
+43:11
+Guy Assa: So we will be pretty close to the prediction. But we can hit everywhere here. So it's not that. So we want to get to a location where we also small in the bias and also small in the variance. Okay, so it won't be optimal because
+43:29
+Guy Assa: there it can't be optimized. A trade off between one another. But we can re, we want to reach this place, which we have minimum as possible of both variance and bias together.
+43:44
+Guy Assa: and how we can do it. We have 2 approaches. We will see both of them. One is cross validation and the other one is regularization.
+43:57
+Guy Assa: Okay?
+44:06
+Guy Assa: Question something, unclear. We want to reduce both of them. We want to reduce the error on the train and reduce the error on the test. This is what we're trying to do so. We want to be on the middle like, yes.
+44:08
+Guy Assa: you want somehow that your arrow on the train and all the tests will be minimum as possible, both because your data is both the train and test.
+44:22
+Guy Assa: It's together your data. So you want that both will be as as low as possible.
+44:35
+Guy Assa: And okay, so we will start with post validation, and we will see how we will using post validation. To understand it. So let's say.
+44:42
+Guy Assa: okay. So we know that we're training.
+44:53
+Guy Assa: that we are splitting the data to train and test why we do it.
+44:56
+Guy Assa: Why we we want to. Why not to learn my model across all my samples
+45:00
+Guy Assa: because you don't have it.
+45:08
+Guy Assa: This is all the samples I have. I've seen all great. I want to evaluate. So I want to do exactly this evaluation before the variance and device. So I split it to 80, 20 or something else. And now I have my train in my test. Great! But what if I have some features that can that I can tune, for example, number of features? So how how will I tune it?
+45:10
+Guy Assa: If I have only the train
+45:39
+Guy Assa: and the test, how can I know? How can I tune the the number of features I want?
+45:41
+Guy Assa: If I'll do on the train, like let's say, 10 features on the train, and then 15 features on the train, so I will be able to test it only on the test, right? So
+45:47
+Guy Assa: is good or not. You need the validation exactly. I need something to help me to validate before I'm using it on the test, because the test I don't want to touch it at all as validation. I want to do something on the train to be able to select the number of features, or do any other hyper parameters only here and test only evaluation.
+45:58
+Guy Assa: Okay, so this is what we want to do. And
+46:20
+Guy Assa: this is the reason we are splitting the train set into training and validation. But
+46:24
+Guy Assa: is it enough to split it to only one chunk of validation? Why not? Because it might have some differences. Exactly. It depends. What I want to do, although you're right, it's always depend. Depends is always the right answer. But most of the time
+46:32
+Guy Assa: to split it to only one chunk is problematic, because if you didn't split it well, you did randomly but randomly. Many samples that are positive here, and most of the samples are negative. You're not going to have statistical significance.
+46:50
+Guy Assa: Exactly. You don't have. You might don't have the statistical significance. You're right, and you can. And if the data, for example, is really spared, so you might get only samples there, or if this is unfortunately something randomly unfortunate, and you didn't get
+47:03
+Guy Assa: them separate as as correct as possible. So what we're doing most of the time, and we'll see in a minute. Different example is splitting them into chunks. So the test I'm not touching it at all. I'm not doing anything with the test. I'm only evaluating at the end. But now I want to to select, for example, the number of features, so how will I do it? I will split my training into chunks.
+47:20
+Guy Assa: We will see in a minute how many chunks, but we will split it into chunks, and then
+47:45
+Guy Assa: we will use
+47:51
+Guy Assa: For example, we have 2, we'll say 2 2 different methods. The the 1st one will be K. Fold. So I'm splitting my training. This is my training. All of this is my training. My test is somewhere else.
+47:54
+Guy Assa: So I'm splitting my training into into chunks, let's say, 10 chunks. And now what I'll do, I'll take this 9.
+48:06
+Guy Assa: Run my model with, let's say, 10 features and validate on this, and get an accuracy or validation accuracy. And now I will do the same. But now the validation will be this one, so I'll train my model with this 9, this and this 8 test on this, and so on and so forth. Do it 10 times, and then I will have the average accuracy.
+48:14
+Guy Assa: and then I will do the same now with let's say, 10 features, and now the same with 8 features, and the same with so, and so forth, and I will pick the one with the best accuracy. And now I'll have
+48:37
+Guy Assa: the free, the model.
+48:50
+Guy Assa: all the all the setup of the model. Let's say, 8 features. And now I can run the entire model and evaluate on the test. Okay, so this is what we're doing here, evaluating. So we will see in a minute another guy in case the features. If I want to choose the correct number of feature, I need to do
+48:53
+Guy Assa: like the
+49:14
+Guy Assa: number of feature multiplied by the number of rounds that I want to to do exactly each one each time. Here you're running the entire model
+49:19
+Guy Assa: each time each time here you want to get time on it. So it's really costly. So you don't want to do it a lot of time, because it takes you a lot of computation. You do a research. Yes, but you can also do a random search, and then you you hope for that. The randomness. Yes, but if you do tenfold, for example. So you need to run the low item 10 times. For example, if I if I want to choose the 7 features.
+49:32
+Guy Assa: I will do what I can
+49:58
+Guy Assa: all the 10 routes if 6 features. So basically, for example, you can do forward feature, selection, and backward feature selection, and you want, let's say you want out of 100. You want 5 features.
+50:00
+Guy Assa: so you do. Forward feature selection. You got these 5 features. You do backward feature selection, you got different 5 features. So now for each one of them, for each 5 features you will learn the K. 12, and the one with the higher accuracy. You say, Okay, this is the real 5 features I want to use. But yes, it's cost a lot of computational time. And you want to somewhat reduce it.
+50:13
+Guy Assa: You're correct, and it depends before you're doing it. You need to to think like how much time it will takes me. Maybe I use other method. Maybe I use filter fails because I want to filter some, and then I will do so. You need to think about what you're doing.
+50:34
+Guy Assa: Another method which we'll talk in a minute. If it's good or not, it's instead of taking
+50:50
+Guy Assa: to split it into chunks and do it over chunks, we will leave one out. Cross validation. What does it mean? It means that every time let's say, I have 10 samples. Okay, let's say I have 5 samples. So 1st I will do.
+50:56
+Guy Assa: I will learn the model on this, and test on this. And now I will learn the model on this, or and test on this. And now always, I'm leaving one out and testing on the rest. Okay, so it's basically like K fold. But the number of fold is the number of the data set, because I'm always leaving just 1 h and running all over all the data.
+51:13
+Guy Assa: So why, it's good. So okay. So it's more. For we have, for example, here we have
+51:36
+Guy Assa: and fold, or as the number of the feature, we will reduce the error on the bias. Because we really learning from almost all the data, and we're predicting almost all the data and doing the prediction just over one. So we will decrease the error on the bias which is on the train, but we might increase the error on the variance, because, as the error on the bias increase, decrease, the error on the variance decrease right? We have some trade-off
+51:43
+Guy Assa: and the compute. If the computational price would go up because we need to do n calculations like on each one of them. We need to do it.
+52:12
+Guy Assa: but if we have too many, too few, excuse me folds, so we might reduce the variance. But the bias is higher. So it's also a trade off. And it's computational cheaper. So basically, if you want to use K fold, we're usually using tenfold, this is the consent of using 10 chance.
+52:20
+Guy Assa: And to leave the the method of leave one out we're using when the data set is really small. Okay, with small data sets, because
+52:44
+Guy Assa: to split. For example, 20 samples into K fold. It's quite funny, like, it's a pretty small chunk. So I'll maybe use 3 1 out. Okay. So maybe if I have like very big data, and I know how the data is separated, maybe between each separate to take one or 2, and like one or 2 and 2, and take the smallest.
+52:51
+Guy Assa: a representative data from
+53:21
+Guy Assa: the huge data, and then do leave one out. But you're saying that you have some prior knowledge about the data. So maybe if you have prior knowledge, you don't need to
+53:25
+Guy Assa: do all of this. Maybe you can do something else we're saying like, you don't have any prior knowledge for you. Each instance is is the same. It's representing one of the population with the same strength. So if I don't know nothing about it, I will use. If I have a big data, a K fold with K. 10 and small data, leave one out in order to choose some parameters, some hyper parameters that they want. For example, the number of features that I'm using or
+53:37
+Guy Assa: something else. So for example. Yeah. So also, parameter that you that you use it. But you didn't know this name. It was with the learning rate in the linear regression, the guardian descent. Right? You you ran the algorithm with Alpha 0 point 0 0 1 multiple. Alphas, you choose the best one and then ran the entire algorithm with it.
+54:06
+Guy Assa: So this is an example. Another example.
+54:33
+Guy Assa: and that was greedy, and there was no cross violation.
+54:35
+Guy Assa: Yeah, there was no cross validation, but the process was with the same idea of when the
+54:39
+Guy Assa: when you have multiple features, it's sometimes it's not the case that you know. The the All is is the sum of its parts. Exactly. So you need to to search different combinations. And so in this example, although we didn't learn yet. But it's really intuitive. So let's say.
+54:46
+Guy Assa: let's say it in a minute. So is- is
+55:05
+Guy Assa: You're classifying according to the nearest neighbor. So let's say I, this is x
+55:11
+Guy Assa: x 1. This is the the Y. Let's say so. If I have x 1 here, and I want to classify this point according to his 2 nearest neighbors, so this will be enabled, and this will be enabled because they are the closest. And then the next point will be belong to here. This classification. Okay, so I'll have here classification one, and so on. So in Knn. I need to choose how many, how many classes I have.
+55:17
+Guy Assa: So I need to somewhat decide this. So if I plot the data, maybe here I can say, I have 3 classes. Right? Let's do the.
+55:44
+Guy Assa: It could be more expensive.
+55:53
+Guy Assa: So here I have 3 classes right? I have class one class 2, class 3. But maybe this is over the train. But maybe in the test I have. I don't know dots here. And basically, this is the class together. I have no idea, right. But they need someone to decide how many classes they have. And P. Is the metric. How I'm calculating the the distance, because they can say Euclidean distance. They can say Manhattan distance or so on, so forth.
+55:54
+Guy Assa: So, for example, I can run K. Fault. Cross validation with K equals to 2 k. Is equal to 3 with P. As Euclidean with P. As Manhattan, and decide which one of them is the best here and then run it over the entire algorithm. Okay, so this is exactly what we're doing here. Cross validation with different K different P, and we're selecting the one with the minimum.
+56:21
+Guy Assa: with the smallest mean error. Okay? Because it gave me the smallest mean arrow. So I will select
+56:45
+Guy Assa: that they have 5 clusters and with distance. Okay, so here I did cross validation. Maybe I didn't explore all the combinations, but I can, because it's too expensive, so I will explore some of them with some knowledge I have.
+56:50
+Guy Assa: This is cost validation. We finish with cost validation. If you understand, it's great. It's really important because we do it. A lot cost validation almost
+57:06
+Guy Assa: every time we're running a model.
+57:14
+Guy Assa: Another method that we can somewhat
+57:17
+Guy Assa: evaluate or reduce or select some features it's called regularization.
+57:22
+Guy Assa: and I want how many folds you have? No, no, this is the K. Of how many clusters I have in the in the algorithm is deciding how many chance I will split my data to evaluate the
+57:28
+Guy Assa: the parameters. Okay, so this is related to how many, neighbor I want?
+57:51
+Guy Assa: Exactly how many neighbors? Exactly. Exactly. Yes.
+57:59
+Guy Assa: So
+58:04
+Guy Assa: in the globalization. We won't dive too deeply inside the how it really works mathematically. You need to believe me or go to and search for yourself, because it might take time to explain it mathematically. But you can understand the division.
+58:06
+Guy Assa: So the idea of regularization is, we want to penalize models that they are too complex. We want to give some penalty and somewhat reduce the complexity. For example, we can see in when we're pruning trees, in pruning the trees too complex. When we have too much, it's too deep, and we have to go all the way there, and we can prune it some ways that we've seen.
+58:29
+Guy Assa: and another method is to give some penalty for the cost function, as we will see today.
+58:58
+Guy Assa: and one of the things it can do is it can prevent overfit.
+59:05
+Guy Assa: So we will start with a quick reminder. We will show the regularization over linear regression. But you can do it basically
+59:11
+Guy Assa: almost on every model you want to do. So. It's not only on the linear regression. But it's easier to see here.
+59:21
+Guy Assa: So if we're using Mse mean square level, as we did in the annotation with a clean distance. So this was the term. We're looking for the best status, the best coefficient.
+59:26
+Guy Assa: right? We're we're trying to find, and theta one x 1 plus theta, 2 x 2.
+59:40
+Guy Assa: So on, plus some constants not constant, some interests bias. Exactly.
+59:47
+Guy Assa: We were trying. We were trying to find the best
+59:56
+Guy Assa: linear function that will fit our data. And what's what is the best? The best is with the least. The line will be as closest as possible to all the dots. Right? So this is the term. And if you want to predict a new point, so we just multiply it by the vector of X, by the vector of thetas. And we will sum it up, and we'll get the prediction of it.
+59:59
+Guy Assa: So if we're looking at linear space, if the coefficients are really magnitude.
+1:00:25
+Guy Assa: the model will be really sensitive to variants. Okay? Because if I have, if it's really magnitude
+1:00:32
+Guy Assa: direct, this is bigger coefficients or smaller
+1:00:39
+Guy Assa: magnitude means that some coefficients are smaller. And in in, for example, in x 1, they're smaller and x 2, they're bigger. So we're resulting with we will handle it in a minute. But we're resulting with something like this, right? Because here we have for example, this point and this point and this point. So here we have,
+1:00:45
+Guy Assa: really small intervals. But here there are bigger intervals.
+1:01:08
+Guy Assa: Okay? And even if we normalize it, which which we have to do, we have to scale it. We can still see this phenomenon, even if it's normalized. Okay? So basically, when we when we want to add the penalty.
+1:01:11
+Guy Assa: we want to say, Okay, maybe this graph is perfect fit for the train, but it's too steep. The relationship between this one and this one is too steep, and we don't want it to be that steep, so we will add penalty that what will happen? It will decrease a little bit the steepness, so maybe it will add more bias will add more error
+1:01:26
+Guy Assa: according to the train Ridge regression. Exactly so. The Ridge regression would be the next. We start with the last song. So what we're trying to do is maybe decrease a little bit the relationship here. But we're saying, Okay, we're paying more for the penalty for the bias in the train, because this is maybe the real line. But we want someone to reduce the the effect, and maybe this will be better for the train.
+1:01:49
+Guy Assa: Good thought, as I know, like feta 0 is in
+1:02:16
+Guy Assa: theta. 0 is the intercept, and the theta. One is the slow loop.
+1:02:23
+Guy Assa: All the deltas are in slope here together. Now, in this case you decided to reduce the slope in this case. Yes, in some sense it's reducing the slope. Yes, so you are taking a gamma to be gamma, or whatever it's called lambda. Yes, lambda. So you took lambda, which is between 0 and one. No lambda can go between 0 to infinity.
+1:02:31
+Guy Assa: So if lambda is 0. It means I don't want to have any effect of the penalty, and I'll take simply the regular line.
+1:02:56
+Guy Assa: But if I increase lambda, so I'm giving a penalty for a big coefficient for cases like this.
+1:03:05
+Guy Assa: So what will happen gradually is, if lambda is big enough, if it will be infinity, all the coefficient will be 0.
+1:03:14
+Guy Assa: But if lambda will be big enough, so what will happen is that this line will be something like this. It will be less steeper because I'm penalizing it. It's a bit hard to see it. Why, it's happening. But if you
+1:03:22
+Guy Assa: run this, you can see if you take a simple example. You can see it in your eyes. Or maybe you have. We, for example, Statwest, have a nice video about it, so you can see what the demonstration. But basically it's penalizing the model. So if you you choose too big coefficient.
+1:03:36
+Guy Assa: it paralyze it. So it reduced the coefficient because you have this term, and you want all of this to be minimum. So if this is big, it will reduce the coefficient that they have a big impact
+1:03:55
+Guy Assa: and it will get gradually to something like this with a slower, smaller slope, because it's part of the arc beam. So exactly, it's part of the optimization process that you're penalizing the coefficients. That effect really drastically on the on the model, and then it will reduce the effect of them. So this is enforce you
+1:04:08
+Guy Assa: to reduce the the coefficient. Exactly because it's saying this relationship. It might be too steep, and it's not.
+1:04:30
+Guy Assa: It's not the real world. And you might doing over fit here. So you want to reduce the
+1:04:38
+Guy Assa: and the effect. And just I want to finish the one sentence that if you take lambda big enough you might reduce, for example, here X. 2, you might reduce it completely, and then you can eliminate it. So if you take Lambda to be big enough, you can.
+1:04:44
+Guy Assa: It can reduce it completely. And then you're doing some kind of feature feature selection. Okay? Because because of the of the optimization process. Okay? And the difference between l. 2 regularization, which called lasso to l. 2 l. 1. Excuse me to l, 2, 1 question. Guy, yeah, this, this.
+1:05:01
+Guy Assa: it's multiplied by all the coefficient or one of the coefficient.
+1:05:26
+Guy Assa: You're doing the it's the l 1 norm. Yeah, it's the l 1 norm. So you're doing the absolute value of each coefficient. You sum it all together, and then we divide by lambda. Okay? Which is a so it's affect all the coefficient. Yes, it's all the coefficient together, which again, it will reduce the effect of the big one, and you will get you. Can. You can get to a situation when some of them are canceled.
+1:05:32
+Guy Assa: So we're saying lasso or l 1, it's the same. So it's over the absolute, coefficient effectively. It's put limitations on the sum, as we said, and it's also can help us with the future selection, because if we take Lambda to be big enough, some coefficient would be reduced to 0. So again, it's really hard to see why, if we're to see in our eyes, why, if we're using for adding this term to the optimization process, why, some of them will be 0, but
+1:06:02
+Guy Assa: there will be 0. I can guarantee you that some of them will be so. Maybe, if you will draw to example. It won't be. You won't see it, because it's too simple. But look for some videos that's showing it beautifully how it can get there. But it's not really part of the scope. You don't need to show. Like to write mathematically, quite separately, just to understand that we can add a term, and it's penalized the entire process. And then it can happen that some of the coefficient will
+1:06:30
+Guy Assa: reduced, we eliminate.
+1:07:00
+Guy Assa: And okay. So before we will go to to the second one. What do you think is the best lambda that we need to choose according to the score? So we have in orange the train and in blue the test. So what what would you pick? Which lambda? It's between 0 0 5 and 0 0 10.
+1:07:03
+Guy Assa: So okay, somewhere between here this, in this interval, you're right. So basically, basically, we want to the test set to be as high as possible. But if we have the train set really low, and this set really high. So it's also not good. We want that the both of the bias and the variance will be smaller as possible. So it's
+1:07:28
+Guy Assa: some of you can say this. Some of you can say this, maybe something in the middle, but but around here it's the best point we can get also the bias and also the variance, are smallest possible. Or here, in this example the score is high as as possible for both of them. Okay, so this is the so we would choose, maybe this or this or something in the middle.
+1:07:49
+Guy Assa: Okay? And the second, the L 2, the second regularization it got reached.
+1:08:13
+Guy Assa: It's basically the same. Okay, almost the same. Here, we're using the second norm which we're doing the power of each coefficient. And we're adding again, we're adding it as a panelized and with lambda as well.
+1:08:20
+Guy Assa: But the difference here and again we won't go too deep. Why, it's happening here, not there. Here the coefficient cannot cancel. So here I don't have feature selection the it. It's also tend to get lower the slope, and the the effect of higher features will reduce, but it won't get to 0 at all. Okay, I can't cancel features like in the previous
+1:08:35
+Guy Assa: and one again, we won't show why it's happening mathematically, believe me, or see some videos. But it's not the scope of the glass. But if you want to parallelize and to get
+1:09:01
+Guy Assa: to reduce the to reduce the variance, because we are saying that here, in this case the variance is high, so we want to reduce it. So we can use the second regularization which called ridge.
+1:09:12
+Guy Assa: So here we're finalized the coefficients from being too large, and as lambda grows, lambda grows, so the slope is getting smaller, as we said, but it doesn't bring them to 0. Okay, and how we choose lambda cross validation, how I know which lambda is the best, so I can use cross validation testing.
+1:09:25
+Guy Assa: and it reduces the complexity. And, as we said, No, no picture selection here, they cannot cancel. So we're staying with all the coefficient. But the power is less.
+1:09:44
+Guy Assa: Okay. So this is a small comparison between l. 1 to l. 2.
+1:09:55
+Guy Assa: So, as we said it in l. 1, we can shrink the coefficient to 0, some of them. But in l. 2 we can't. We still have the entire space. So here we add some bias because we're changing the the slope or the shape. But we strongly reduce the variance because we're saying, Okay, it might not be
+1:10:00
+Guy Assa: on the train. It's like this, but the test cannot be that sharp. So we reduce the drastically the variance. But in Ridge region L. 2, we also had bias, but we reduce the variance in the in less power. Okay? Because we are not dropping any feature
+1:10:23
+Guy Assa: when it's work the best when the model is really spar. So we want to reduce the features. As we said before, when we want to that, the model will be more interoperability, interoperability. Okay, so we want to reduce the features. And here, for example, we use the reach when there is
+1:10:40
+Guy Assa: Collinear when there is correlation between features. So I know that one feature is correct with another, so I don't want to reduce it completely, but I want to somewhat minimize the effect, so I don't want to drop them at all. But I want to minimize the effect. Okay, this is the so. The interparability here is high because we're reducing the space. And here is moderate because we're staying with the same number of coefficient. And where we're using this
+1:10:59
+Guy Assa: when we want to. For example, gene expression, when when we have 20,000 genes, but just 100 patients. So we want to reduce the space.
+1:11:26
+Guy Assa: And here we use it. When, for example, when we have polynomial regression where we want to stay with the same number of features, but we want to reduce the degree of variance. Okay? And again, both can be applied for many kind of models. We've seen it only on linear regression, but it can be a logistic regression and others
+1:11:33
+Guy Assa: no, no one at all. We use it a lot. Yeah. So it just was a to understand it. But we can apply it for many other different methods.
+1:11:55
+Guy Assa: Great questions regarding this regarding different things. Yes, theoretically, you could also use higher order, higher order norms, you know, like 3 or 4 of those, the effect will be different, and that you encounter.
+1:12:07
+Guy Assa: So I did it usually use l 1 or l. 2. I guess if you have, explain it, or if you experiment it so you can get other results, or if you have some explanation while you're using it. But I saw you usually likely bridge or last, but maybe some other degree can have. But again, I'm not familiar with the effect of it. But yeah, you can basically use whatever you
+1:12:21
+Guy Assa: you want. And and another thing in neural networks, we sometimes use dropouts or dropout rate.
+1:12:51
+Guy Assa: and this is also sometimes regarded as regularization.
+1:12:57
+Guy Assa: Drop out rate of- of what you drop some nodes in your layer.
+1:13:00
+Guy Assa: So you have a drop of like. If- if you imagine you have, let's say you have 3 dense layers.
+1:13:07
+Guy Assa: and then you have a dropout layer, and then another density or something
+1:13:11
+Guy Assa: in regard to to penalizing in regard to what? Yeah, I mean, I think the argument here is that you drop some of the of of the weights. And it
+1:13:16
+Guy Assa: it's improve the prediction somewhere. Yeah, but it's not a. It's not penalizing. I think the model itself. It's not by penalizing it by dropping out some some ways, some layers, some. Yeah. So this is, maybe
+1:13:27
+Guy Assa: it's it's a completely different method of here. So we're we're talking about penalizing the model itself, and intrinsically doing the the process of limiting eliminating features. Or as we talk here, that you're doing something prior, and you're but I'm not. I'm not sure I'm not quite familiar with the process yet. You said so.
+1:13:44
+Guy Assa: I don't know how to compare it to to this
+1:14:06
+Guy Assa: and great and other other questions regarding. So what is what is important to remember is so
+1:14:10
+Guy Assa: that also is doing a feature. Selection is reducing the coefficient to 0, and the regularization is doing kind of
+1:14:19
+Guy Assa: reducing the variance exactly for a polynomial, for example. Exactly so. Lasso can reduce space. It's not have to reduce the space. It's not always reducing the space. It depends on the lambda you're choosing, if it will be too small, so the change will be
+1:14:31
+Guy Assa: Mino, and then it won't get your coefficient to 0. But if you're using lasso you might reduce the feature space. This is the and in the ridge you won't reduce the space at all, because it's it will never get to 0. It might be really close to 0. But it will never go to 0. And this is the difference. Yeah. And how do you decide
+1:14:47
+Guy Assa: on the which? No, which? What is the number of lambda to choose?
+1:15:08
+Guy Assa: How you choose it like? If you're if you're between one to 10, between, one to 100. Between. Yeah, it depends on the data depends on the first, st you can try. You can try. Let's say, 1, 101,000, for example, and see how it shifted. And then you say, Okay, maybe let's search between one and 100. So you maybe do some.
+1:15:15
+Guy Assa: Maybe you have prior knowledge about it. Maybe you've seen some models that use some lambda. So you have. Basically, you can use whatever you want. Depend. It really depends on data and on the expertise knowledge you have, or
+1:15:36
+Guy Assa: can we can we do, for example, cross validation in order to choose the lambda you use. You choose the lambda using cross validation
+1:15:52
+Guy Assa: most of the time, unless you have some prior knowledge, and you want to use some landing right?
+1:16:01
+Guy Assa: Great. So today we did some something that it's not related to classification or to prediction. We did something about the features themselves. How I'm choosing them I don't need to choose all of them.
+1:16:07
+Guy Assa: Next lesson we will go back to classification, and we'll do or prediction we do, Svm. Which we will combine the kernels that you've seen yesterday, I guess, with another algorithm that's called the Svm. That I guess that you will learn as next class. But we will visit this ideas of feature extraction, and we'll also do a metric evaluation. How I
+1:16:20
+Guy Assa: and how I check the performance of, because until now, we said only accuracy. We've seen. Okay, this is 95 accuracy. It's good. But we have another metrics that we can evaluate the performance. So now we will go like back and forth from models to some other things that there are other topics. Okay, so this is the general sense. So if you understand the feature selection, and you understand how you penalize and what you're doing it. So
+1:16:46
+Guy Assa: we're good, and we can meet next week for the next lesson.

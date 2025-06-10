@@ -1,0 +1,734 @@
+Guy Assa: So 1st I'll say that my voice is declining from the first, st and
+0:04
+Guy Assa: session to now so sorry, for my voice will break from time to time. So just
+0:12
+Guy Assa: So this is just a heads up. Okay. So today we'll do a Bayesian learning.
+0:20
+Guy Assa: So do you remember what you did yesterday, or
+0:28
+Guy Assa: for those of you who participated yesterday.
+0:32
+Guy Assa: What have you learned?
+0:36
+Guy Assa: Based on learning? I guess right. But you also finish the
+0:41
+Guy Assa: what we learned last week the logistic operation.
+0:45
+Guy Assa: So I hope
+0:49
+Guy Assa: I hope all of you now better understand the logistic regression, or you finish it with the entire process. And today we'll touch
+0:51
+Guy Assa: 2 main topics, which is
+1:03
+Guy Assa: Bayesian learner, which we will start with, and then we will do something called naive base. We will understand what is naive, base, and we will do a real quick recap on em expectation. Optimization. You did it last semester in a statistics course, so we won't dive too deep into it, and it's not part of the material of the course
+1:06
+Guy Assa: officially, but it's still here in the presentation, and we will still go really quick over it, maybe to connect it and to it will be more clear for you if you'll ever see it. Maybe after this presentation you will understand
+1:31
+Guy Assa: more deeply why we're doing it when we use it.
+1:48
+Guy Assa: Okay, so let's start.
+1:52
+Guy Assa: we will start. So Bayesian learner is something that is under the umbrella of a probability algorithms. Okay? So we'll dive into the probability algorithms. And we will learn some algorithms such as Bayesian learning.
+1:56
+Guy Assa: So just as a notion before.
+2:12
+Guy Assa: And so the most intuitive algorithms.
+2:16
+Guy Assa: So I'll remind you what we want to do, we want in every algorithm that we're doing in machine learning. We want to predict something. Okay? So if we want to do something straightforward. So I can use a majority class right to predict something if I want to use some probabilities. So if most of you are men here, so I can guess that by majority vote, I said, most of you are men. So I can guess that the next one that will come into the class will be a man. So this is a pretty much
+2:19
+Guy Assa: straightforward probability
+2:49
+Guy Assa: algorithm. But this is a really flat one. We want to see much more, not much more, but more complicated probability. But this is a note that we will bear in mind to the to the next levels.
+2:51
+Guy Assa: So let's do some recap on probability, some definitions that will help us to build the the Bayesian learnl. So we will start with a sample space. What is sample space? It's simply the sets of all events that can be in some experiment. For example, if I'm tossing a coin, I can have heads or tail. If I'm rolling the dice, I can have the numbers one to 6, right. If I'm
+3:06
+Guy Assa: rolling 2 dice. I can have all these possible outcomes, right? All these 36 possible outcomes. And this is my sample space. Or if I'm looking at the person height. I can see heights between 0 to let's say 3. There is no one higher than 3 meters, so it's between 0 and 3
+3:35
+Guy Assa: and it's continuous. So it doesn't have to be discrete.
+3:57
+Guy Assa: Great!
+4:03
+Guy Assa: What is an event? An event is subset of the sample, for example, for rolling a dice. I can see each one of these events, or this event is also an event. Okay, each one of them separately is an event, or this is also an event. All of this row is event. What's special about events? We can do some operations about the events right? Talking about the union of 2 events, the intersection, the complement of events, and so on, so forth.
+4:03
+Guy Assa: What is a random, variable, another variable. It's some function that I'm doing on the event. For example, if I'm rolling 2 dice, I can say that my function is the sum of these 2 numbers, 2 outcomes. So, for example, if I roll the number one and the number 3 for 2 dice.
+4:34
+Guy Assa: and I set the random variable to be the summation of them. So it would be 4, or if I'm rolling 6 and 5, it can be 11. And now I can talk about probabilities of this random variable. So, for example.
+4:51
+Guy Assa: if I'm looking on random, variable. It is the summation of 2 outcomes of the dice. So what is the probability to see summation equal to 1 0? There's no such way that I'm rolling 2 dice, sum them up, it will be one.
+5:05
+Guy Assa: It's at least 2, so it will be 0. What is the possibility to see? 2 that I'm rolling 2 dice into b, 2, 1 have to be, or one over 3, over 36 right can be that I'm rolling one in the 1st dice and one in the second dice. So it has to. So I have only one possibility, and I have
+5:22
+Guy Assa: total of 36 possibilities. As we've seen here, so it will be one over 36 in here as well to see the summation of 5. I have this 4 option
+5:42
+Guy Assa: to get the summation of 5. So it would be 4, over 36. So this is all the so this is the probability to see some event of the random variable. Okay, so this is a
+5:54
+Guy Assa: some background recap.
+6:05
+Guy Assa: Okay? So now, if I have the definition of the random variable, I can calculate the expected value of this random, variable. Okay, you're simply doing the expected value. As we know, we're taking the value itself. For example, the summation of 5, as we've seen before multiply it by the probability to see 5, which is 4, over 36, and we just
+6:10
+Guy Assa: doing it over all our
+6:34
+Guy Assa: set of possibilities. And then I'm getting the expected value. Okay, just remember that the expected value doesn't have to be a number or an event from my events. It can be, for example, if I'm looking at the summation of 2 dice, it doesn't have to be a complete number. It can be dot something like a 5.6 or something. Okay, so it doesn't have to be part of the
+6:38
+Guy Assa: of my event.
+7:02
+Guy Assa: This is for discrete one, and if I'm looking at the continuous one, so it will simply be an integral right? So if I'm looking at the expected value of a
+7:04
+Guy Assa: the summation, or something of 2 dice, so so I can see the discrete one. If I'm looking at heights, for example, it can be something like omen distribution
+7:16
+Guy Assa: great, and if I have the expected value, I can also calculate the variance.
+7:27
+Guy Assa: Okay? So we know this is one of the formulas for the variance. We have another one. But for our interest this will be the one that we will see today. So it's simply taking each point
+7:34
+Guy Assa: and reduce the expected value in the power of 2. And do the expected value to this. This will give us the variance. Okay? And the standard deviation is simply the square root of the variance. And all of this we know by now.
+7:46
+Guy Assa: Okay, now we'll continue with the probabilities, and I hope all of you are familiar with this kind of diagram, which simply say, we have 3 events, this is the event, a event. B, event, C, and all the white area is the event of not a, not B, and not C,
+8:05
+Guy Assa: okay. In the event. For example, here is the intersection between A and C, okay, so we have these spaces, and we will denote, as we see here, the intersection between
+8:24
+Guy Assa: A and B. It's this part intersection between A and B, so we'll denote it as such.
+8:37
+Guy Assa: So we will use this notion like this is union. So union it's I want also A and also B, and we'll have intersection, which is the parts that they are sharing together. So what is the probability, let's break it down to smaller parts. So what is the probability of seeing a Union B using
+8:43
+Guy Assa: great? So I want to take all A and take all A, and I want to take all B. But then I include this part twice. I need to subtract it. So it's simply
+9:05
+Guy Assa: like you, said PA, plus pb, minus PA intersect value. Great.
+9:16
+Guy Assa: What about just we will go really quick over it, but it's we can do it for as many circles we want. So if we take this problem, we can break it into a sub problem. But it's taking this part union, this part. Okay, and this part U Union C, and then we can use this
+9:21
+Guy Assa: this formula to break it down so we can break it down to let me know
+9:45
+Guy Assa: we can break it down to the probability of this as we did here. The probability of this plus probability of this, so the probability of this one is this, plus the probability of C minus the intersection between this part and this part. And now we can break it
+9:53
+Guy Assa: further more, and break this part to intersection operates kind of like multiplicity while union operates kind of like plus in some sense. So we can break it down to a union intersection. C, Union B intersection C, and if you don't convince you, you can do it by yourself. But I don't want to go too deep into it, and we'll finally get
+10:12
+Guy Assa: this one. So it's a probability to get a plus b plus C minus the common
+10:38
+Guy Assa: minus the common places, plus the common of everything, because we subtracted too many times. So we need to add, so it's just this is how we can play with the probabilities. And it's just to recap. So we want to show you that it's not. We can do it with more than 2 probabilities, 2 events, not just A and B. We can do it with.
+10:45
+Guy Assa: Okay? So now let's connect the this material to numbers, to real probability. So let's say, we're talking about this word. It's from a Stat. Quest. I.
+11:09
+Guy Assa: It's simply and I loved it. So I
+11:20
+Guy Assa: insert it. So here we have the word of we like candy. We like soda. We like both candy and soda, and we don't like anything right? So I have samples, and I can plot it like this. And I can have also these metrics and plug the numbers right here. I have 2 people that loves also soda and also candy right? And 3 people that doesn't like everything don't like nothing, and so on and so forth.
+11:23
+Guy Assa: Okay.
+11:47
+Guy Assa: all this slide will eventually. I want to show you the final thing which is conditional probability. So let's go step by step, and you'll finally see how we got to conditional probability and why it equals to something that it's equals and not just tell you this is the solution.
+11:49
+Guy Assa: Okay? So if we're looking at at the person that loves candy and also soda, what is the probability?
+12:08
+Guy Assa: What is the probability of person who loves candy and soda, 2 over 52 over 40, because I have 2 people that loves candy and soda. And I have 14 people total. So I have 2 over 14. What's the meaning of it? It's if next person will enter the class. I would say that the probability that he he would love candy and soda at the same time is 2 over 14. This is the meaning of it.
+12:15
+Guy Assa: Okay. Now I can write the marginal probabilities right? The marginal probabilities of someone who loves soda is simply
+12:44
+Guy Assa: they love soda, and they love soda. So it's 2 plus 5,
+12:53
+Guy Assa: 7 out of the total. So it's 7 over 14, and I can do the same, for doesn't love soda. Love candy doesn't love candy. Okay? So now let's insert a conditional a condition. Okay? So if I'll tell you that we know the person loves soda, we know when someone told us the next person will love soda. What's the probability you would like candy. What's the probability?
+12:57
+Guy Assa: 2 over 7. Right? Because now we know he loves soda. So the entire ward is not this entire ward? We're looking only at this circle. So we have only 7 people here in this circle. And now we want him also to love candy. So it's 2 over 7.
+13:25
+Guy Assa: So we're saying it with condition. So we know he loves soda.
+13:43
+Guy Assa: And now we we want to see the probability of loving soda and candy right? But loving soda here. It's a it's a redundancy, right? They can just take it off, because I know we love soda, because
+13:48
+Guy Assa: this is the condition so. But we want to. It will be in this form just to understand something. So this is a conditional probability, as we've said. But what we actually did the actual calculation was this one. I know we love soda and candy.
+14:00
+Guy Assa: so love soda and candy. As we said here, it's 2 over 14, right? So it's 2 over 14, and the probability of someone to love soda is, as we said, it's 7 over 14, so we can write it as such, which is the same right. It's 2 over 7, but we write it differently from a different angle.
+14:16
+Guy Assa: So what we got your section over the total space? Exactly, so, simply the the formula of conditional
+14:35
+Guy Assa: probability, as we see here, is the intersection divided by the entire space of the of the condition. Okay, so this is the formula. And of course, as I said, we can subtract the and S. Because we know that he loves S. So we don't have to write it as such, right? I can just take it off. And it's implied from this that he also loves.
+14:45
+Guy Assa: So right? So this is the formula, and now we will see it with A and B, and so on, and so forth. But it derived from this. Okay, so we have now the notion why this
+15:07
+Guy Assa: looks as such. So I just wrote it. You can write it as such without the
+15:17
+Guy Assa: and S. And this is the conditional probability, as we've seen a second before. But with Nb, okay, so what is the probability
+15:22
+Guy Assa: to see a given B. If we know it's B, it's equal to the intersection divided to be exactly like we've seen up to now, just with A and B instead of candy and soda. Okay, so now let's do a quick
+15:32
+Guy Assa: and
+15:48
+Guy Assa: smaller like example. So what is the probability to see? A, if I know that I'm b 1. So I know I'm b 1. So let's look at the
+15:50
+Guy Assa: what one? Why? Because I'm looking at intersection. So the intersection of A
+16:01
+Guy Assa: with v 1 is 0 point 1 right? Because it's inside a divided by the probability to see 0 to see v. 1, which is 0 point 1. So it's 0 point 1 divided by 0 point 1, which is one. What is the probability
+16:06
+Guy Assa: and to see a if I know that it's 2. What is the probability?
+16:23
+Guy Assa: See you, what's
+16:30
+Guy Assa: 75, 75%. Exactly. Why? Because I'm looking at the intersection of A and B 2. So the intersection is this part, but it's also A and also B 2. It's only here, 0 point 1 divided by the entire B, 2, which is 0 point 1 2 plus 0 point 0 4, which is 0 point 16,
+16:33
+Guy Assa: and I have 12 divided by 16, which is 75. And what is the intersection? What is the A given B 3.
+16:57
+Guy Assa: 0. There is no connection between A and B, 3. Which means that the intersection is 0, and I don't care what is the denominator, and then it will be 0
+17:06
+Guy Assa: great.
+17:17
+Guy Assa: So now let's do a more
+17:18
+Guy Assa: like example, that it's a little bit more with our formulas. So we have this
+17:22
+Guy Assa: data. We know all this, what we know, we know that 90% of the people pass the exam. And we know, of course, that the complement 10 will fail. But we also know this data. So we know that if it passed the test.
+17:31
+Guy Assa: So a person that passed the test also learned to the test
+17:46
+Guy Assa: with 90%. So the probability to pass that if you pass the test. And you learn 90%, the probability to learn that it didn't learn. Given the pass is 10%, and so on and so forth. Okay, so.
+17:49
+Guy Assa: And now the question is, what is the probability that you pass the test? If you learn? So we're asking the opposite question, right? We're asking, what is the probability
+18:03
+Guy Assa: that if you learn so the condition is if you learned. So let's L, it's learned. What is the given? You learned? What is the probability that you pass the test equals to what.
+18:14
+Guy Assa: So we don't have this directly from the from the data that we have, and we need somehow to extract, right? So we can start building building it up. Okay. So let's say, take the 1st row and use what we've learned up to now. So the probability of learn given as equals to what? Using the the rule we've seen just now.
+18:27
+Guy Assa: Yeah. But what but how can I break it to? What
+18:54
+Guy Assa: of what L intersect P over over p of pets, right? And we know that this equals to 0 point 9 right? And we know that this is
+19:02
+Guy Assa: 90% or 0 point 9. So we know that this part is 90% multiplied by 90%. So this part only will be 91% right? Okay, which is good, because this.
+19:16
+Guy Assa: if you're looking at this, so if we'll break it as well. So this is P of the intersection, right?
+19:29
+Guy Assa: Divided by P. Of L.
+19:38
+Guy Assa: So we we find the numerator denominator is a 21. But what is the denominator? We still don't know. We need to break all of them.
+19:40
+Guy Assa: all of them. So let's do it.
+19:50
+Guy Assa: So I break all of them to this. Now, what is the denominator? I
+19:53
+Guy Assa: did this process to all of the 4 equations, and I got 81%, as we've said. And but now, how can I understand? What is the probability of learn?
+19:58
+Guy Assa: What? What do I need to take
+20:11
+Guy Assa: fail? And failing that, the 1st deferre maybe
+20:14
+Guy Assa: exactly the 1st and the 3.rd Why? Because I need to take all the places where, when the learnings exist, it's similar to the what we've did here. What we've done here, right? We take all the occurrences where B 2 happens. So we take this one and this one, and we sum it up together. So it's the same in this example, we're taking all the occurrences that we've learned.
+20:19
+Guy Assa: So if we let look at all the occurrences. So we have here that they learned, and here that they learn, and so together it will be divided by 81% plus point 5%, which is
+20:44
+Guy Assa: 81.5%. Okay. So this is the
+20:57
+Guy Assa: total probability of someone there. Right? It's all the people who
+21:01
+Guy Assa: learned which is the summation of this
+21:06
+Guy Assa: great. So what is the probability of learn? So, as we said, 81.5% and didn't learn
+21:11
+Guy Assa: the complement of it, the other people. So now, what we we can see here that they equals, they think to 90, 99%.
+21:17
+Guy Assa: Okay? So now we can answer the question and the probability that someone given
+21:27
+Guy Assa: given that he learned to the test.
+21:36
+Guy Assa: And what is the probability for him to pass the test 99%. And then we can calculate on the rest. And okay, we understand the point.
+21:40
+Guy Assa: Okay, so this is a a conditional probability.
+21:48
+Guy Assa: Great, important thing to say that some students messing up is mutually exclusive and independent. Okay, so what is mutually exclusive. It's 2 events that cannot happen at the same time. Okay, they have. They're not sharing any anything together and independent. It says that something happened with no relation to the other one, but they can happen at the same time. For example.
+21:54
+Guy Assa: the A event is for me tossing heads, and B event is for me wearing white shirt. So it's 2 totally independent events, right? Because I'm not choosing what I wear today from the coin I'm tossing. I'm tossing just now. I'll flip a coin. So okay, I wore. I wore a white shirt today, and I can toss ahead. So I have a common.
+22:22
+Guy Assa: a common space of of there, too. Right? There's some probability that I'll wear a white shirt, and I'll toss head right. But if
+22:50
+Guy Assa: mutually exclusive means that these 2 events cannot happen at the same time, for example, I cannot toss a head and toss a tail at the same time. Right? So these 2 events will be mutually exclusive. Okay, so just bear it in mind that if we're saying independent event, it doesn't mean that they're not sharing some probability that it will. They will happen together. This is something that some students are messing.
+23:00
+Guy Assa: messing up. And it's just important to understand that it's not independent, not implying that they are not, that they cannot happen at the same time.
+23:27
+Guy Assa: Okay, after we said that, let's see what is independent in our content context. So
+23:37
+Guy Assa: in probability, we can say that if these 2 variables are independent, it's simply taking the probability of one happened. Multiply the probability of the second one to happen, and this will be the intersection right? So the probability that will be heads and I wear a white shirt is multiply. The probability of me wearing white shirt
+23:46
+Guy Assa: multiply the probability of getting heads, and this is the intersection of them both. Right? So if we take this equation, this is the equation we've seen right now the conditional one. We just multiply the P of B here and switch the formula. So this one goes here and the multiplication goes here. And now, if I use this one, I'll just take this and put it here. And I can
+24:05
+Guy Assa: divided by P of B, and just simply get this equation. So it means if they're independent.
+24:29
+Guy Assa: If 2 events are independent, so I can say that the probability of A simply equals the probability of a given B, because B doesn't give me any information about A, so a will happen anyhow, and it's the same about the probability of B right. It's the same, just the opposite
+24:36
+Guy Assa: great. So this was the recap, and we understand everything.
+24:54
+Guy Assa: Now we're going for classification. So
+24:59
+Guy Assa: the world we live in right now is someone gave me the the distribution. Okay, now I know distribution. Let's say someone told me it's Gaussian or something else. And now I want to classify something as A or B
+25:02
+Guy Assa: male or female, something in disease or or healthy people. Okay. So now, I want to classify someone. Okay, so if, for example, I I'll tell you that the probability of the participant class, they are 90% male
+25:17
+Guy Assa: and 10% female. So I'll ask you, what is your prediction giving this information? And so if you use only the prior and cinema, you would say, May, so what is the prior? The prior, as we said, is the prior knowledge I have. Okay. I have prior knowledge of, for example, 90% past the test and 10% failed the test. So this is my prior knowledge.
+25:33
+Guy Assa: And I can use it. And I say, Okay, I know this knowledge, and maybe I will predict only by the pile of knowledge.
+25:58
+Guy Assa: It's enough. It's not enough. Or how, if I use only the prior knowledge, and I need to predict if it's male or female, or A or B. So if I'll use only the prior knowledge, I will always, for example, predicted, the next person will enter is A is a male
+26:05
+Guy Assa: which is not enough because it's not true right? Because if I use only the pile on the until I say male male male, and it would be female. I will fail. So it's not a complete way to look at the problem so we can add something that call likelihood.
+26:21
+Guy Assa: What is likelihood likelihood is, remember, we are dealing with a situation when we know we already plot this plot. Okay, someone told me, this is the shape of the data you have. Okay, this is the shape.
+26:37
+Guy Assa: So now I can simply say, and okay, let's someone give me observation. 12. This is the observation that I see. So I can, SIM. I simply can go to the distribution and look who is higher right to look who is more probable to happen. So here we're looking at likelihood, likelihood is not probability.
+26:53
+Guy Assa: Okay, it's like the the specific point on the on the function. Okay, this is the likelihood so given. I know it's B. Now let's see what is X given. B, so the likelihood is 0 point 3. It's here.
+27:15
+Guy Assa: And the likelihood given this point, I know this point, I want to see what's the likelihood of this point on A. So I simply go to A, and I see 0 point 2. So by this distribution, for example, its heights, someone told me, this is the heights of men. This is the height of female. So by this I can say, Okay, if I'm seeing someone that is, 12 foot or something is more probable to be the red one.
+27:31
+Guy Assa: the main. So maybe I look just about this graph. Maybe this is enough. This is enough. Yes or no. You think it's maybe
+27:54
+Guy Assa: good enough, maybe. Okay. So I say, I won't predict someone by the prior probability, because it's too straightforward, and I can't say that everyone is male. So maybe I look at the sample I have, and I'll draw something that I know in this shape, and I'll predict by the one that is higher.
+28:03
+Guy Assa: You think it's good. It's not good
+28:21
+Guy Assa: exactly. It's not good. Why? Because maybe this one is the distribution of ill people in the population. And this distribution is the distribution of healthy people. And this one happens to be only 0 point 0 0 0 1 of the population. I draw this according to 10 people, and I draw this according to 10 million people. So okay, I can see someone that is more likely to be a
+28:24
+Guy Assa: sick person. But the chance to see someone that is sick is so small that they can not just simply take
+28:53
+Guy Assa: the likelihood of it. I need to also include the prior, the prior knowledge. I have the relation in the in the population. Okay, so here we are, we're going to posterior probability, which simply combines this together.
+29:00
+Guy Assa: Okay, so the posterior probability is what what is the probability
+29:17
+Guy Assa: given some data that I'm seeing? That is A is ill or is healthy? Okay, A or B, ill or healthy
+29:22
+Guy Assa: and using the base rule. We can simply break it down to this formula because we don't know this. We don't know. Given the data, we want to see it all the way I want, because we want to see. Given that, I know that it's a male or given that I know it's is sick. What is the privilege to see X. Right? This is, we know how to how to handle this one. Given. I know it's it's sick, right? Because this is sick against healthy one. So I want to
+29:33
+Guy Assa: look at it in this form. So using the base rule, I can break it down. And I say, Okay, the probability of a given X is simply the probability of X given a multiplied by the prior, and let's keep it for a moment. The denominator. It's the marginal likelihood, but we can keep it for a moment, and we'll talk about it later.
+30:02
+Guy Assa: But we can simply look at this as okay. This problem we don't know but this one we know right? Because we know the distribution. Someone told me the distribution so I can calculate the likelihood.
+30:25
+Guy Assa: And I know the prior. It's also someone told me, 90%, 10% or 50 50 or something like this. And then I can calculate. P, why, the denominator is not important, because I simply want to classify, to say you are A or you are B,
+30:36
+Guy Assa: so if the equation for A would be this one, the equation for B would be dissimilar. But I need to replace B here here and here, but the denominator will stay the same, so I simply can ignore the denominator, because they have the same denominator, and just ask the question of who is bigger. The probability of a given X or B given X, and I want to maximize it. I want to take the maximum.
+30:50
+Guy Assa: And
+31:19
+Guy Assa: of this both. And it's called map, the maximum, a posterior probability. This is the name of this prediction. Okay, so here we can see why we don't need the denominator, because we are asking simply, who is bigger and the denominator is the same.
+31:20
+Guy Assa: So I simply do it. So if we're going back to the example. So P. Of a. Let's say that A is the red one. So I'll take the likelihood which I'm going here, and the number will be 0 point 3. Multiply by the prior. Let's see, let's say 0 point 9, and then I'm doing the same for B. So B, here is 0 point 2. Multiply the prior, and I'm asking who is bigger. And then this is the way I can predict.
+31:37
+Guy Assa: So remember, someone told me, this is the distributions. I know it. Maybe I calculated. Maybe someone told me. I know this knowledge. And now I want to predict when I see a new instant coming, and I can predict it using the Bayesian data.
+32:01
+Guy Assa: Okay, so this is this is the Bayesian learner in simple and just. If you
+32:18
+Guy Assa: you do want to calculate the denominator. So it's simply taking.
+32:24
+Guy Assa: To sum up all the likelihoods. So, for example, here it will be 0 point 2 plus 0 point 3. Okay, this will be the denominator. So it will be 0 point 5 here and 0 point 5. This is just the you want to calculate it. But again, when you're comparing both of them, you don't need them.
+32:28
+Guy Assa: Okay. And of course, in machine learning, we like to take the minimum and some error. So we need to somehow formulate it into a hole. Okay, so exactly what we did now. But maybe look at it as the opposite way, and then we can take some error. So, for example, if we classify to be
+32:46
+Guy Assa: okay, so the arrow of me of not being right is P of a given X right, because if I classified E. What would be the arrow? For if I mistake so I classify this as A, this is B, for example. So I my mistake would be P of A of X, and all the way around, right? And because I'm taking the maximum of them of both for each X. So I simply can say that the arrow is the minimum there, right? It's just the opposite way from choosing
+33:06
+Guy Assa: the bigger one, so my L will be the minimum on them. So taking the minimum. And now I want to write it in some equation of loss, so I will define the loss to be
+33:35
+Guy Assa: 0 if they are the same. So if it's a and I say it's a so, it will be 0 because I am correct.
+33:50
+Guy Assa: and if it's a but it's supposed to be B, so I'll give it one indicator when I'm correct or when I'm wrong. And now I can write a risk, the expected loss. Okay, so what is the the risk? Or this expected loss? So simply for everyone I miss, I have a mistake. It would be one here, and then I'm paying
+33:57
+Guy Assa: in the amount that I'm that I'm wrong, and if if I correct, it's 0. So this would be 0, simply, okay. And I can write it the same. But everywhere I write I can just
+34:17
+Guy Assa: throw it away. So only in the places. I'm wrong. I'm summing it up, and it's equal to the complement one minus all the occasions. I'm right. So this is simply some way to see it as a as a expected loss, and then we can calculate.
+34:30
+Guy Assa: For example, if you if you have a distribution. And now you have some validation, and you want to see if you're right or wrong, so you can simply test them, and then you'll have the risk. You can assess it with some number. Okay, so this is just a other way to look at it as we've seen before.
+34:50
+Guy Assa: And we want, of course, to minimize the risk.
+35:09
+Guy Assa: Okay? So before we will close this learner, so we can do it with more than 2 labels or 2 classes. And we talked up to now only about 2 classes A or B, but we can do it with 4 classes, right? So someone gave me the distributions. Now, this is the distribution. This is the word
+35:13
+Guy Assa: I live in. And now I want to classify a new sample. So simply, what I need to do is to take the X value of it. Let's say it's here and now. Calculate the map of each one of them. Map of green map, of yellow map, of red, map, of
+35:35
+Guy Assa: of the blue one, and remember that the map is the likelihood. Multiply the bio right of each one of them, and then I can get my prediction. I can.
+35:51
+Guy Assa: compare them all and take the maximum of them all. Okay. And just for you to understand. So the denominator, if you'll ever need to calculate it. It's simply taking all the likelihoods of this point. So if it's here, so it's the green plus the yellow plus the red plus the blue, this will be the denominator. But again, when we're comparing, just want to take the best one, we don't need the denominator.
+36:04
+Guy Assa: and just something we're doing a lot just to make our life easier in the calculation you can plug in the land, and then you can. All the calculations can be much easier than multiply these kind of things, and we can do the land. We talked about it a lot, because land is
+36:28
+Guy Assa: monotonically increasing function, and we're not losing the the information great, so summary for
+36:47
+Guy Assa: based on classified. So someone told me, what is the distribution? I know what it is now I want to classify a new person, so I can do it by prior. But it's too simple right to ask who is bigger in the prior. We can use only the likelihood
+36:55
+Guy Assa: and take the maximum of the likelihood. But it's also not capturing the full picture, because maybe the proportion of them in the population is so extreme that it's not. We can't assume that this simple equation. So we can take the maximum posterior, which is the multiplicity of them of them. 2. And we can
+37:13
+Guy Assa: eliminate the denominator because it's the same for them, for the 2 of them. And then we simply can ask with bigger map of A or map of B, okay, so this is simply it. This is the summary of everything we did
+37:35
+Guy Assa: by now, questions about it.
+37:50
+Guy Assa: Okay, great.
+37:56
+Guy Assa: So now we'll move to naive base. So remember that up to now we've said that someone is giving me the distribution right? Someone is
+37:59
+Guy Assa: giving me the distribution. And now I want to classify the next person.
+38:07
+Guy Assa: So first, st let's understand how we can calculate the distribution. Okay, we want to say something about the distribution. So in order to calculate the posterior. We need the prior and the likelihood, and we need somehow to know what is the distribution in order to
+38:10
+Guy Assa: and calculate the likelihood. Let's say that the priority is right. The priorities, or you can just count how many of them there are.
+38:28
+Guy Assa: But the likelihood it's much more complicated to calculate. So let's see how we we can.
+38:35
+Guy Assa: So we have basically 2 options.
+38:40
+Guy Assa: or that someone tells me, listen.
+38:43
+Guy Assa: this is a parametric one. I'll tell you. It's Gaussian. Someone like God is a.
+38:45
+Guy Assa: It's here and tell me the day. The data you're handling
+38:51
+Guy Assa: right now is parametric, and it's Gaussian. So you can simply calculate your expected value and your Sigma, and then you can continue.
+38:55
+Guy Assa: but sometimes nobody tell me nothing about the about the parametric, and then I have no prior knowledge, and I can. I have only the plot I can plot, for example, here the histogram and I can, and I have to operate with the with the histogram. So this is the 2 options for me to understand in which word I'm working.
+39:04
+Guy Assa: So this one is called Gaussian a base, and this one is, of course, script, and we can plot our histogram, which is simply count counting how many people have seen here, and how many people have seen here, and so on, and so forth.
+39:26
+Guy Assa: And okay. So if it's parametric. So
+39:39
+Guy Assa: if nobody told me the parameter the parameters themselves, I can estimate them how I can estimate them simply using
+39:43
+Guy Assa: this formula of the expected value which is summing all the points divided by the number of points, and I can calculate as well. The sigma squared
+39:50
+Guy Assa: right, and I can do it for each, each one of the of my classes. So, for example, for the blue class, I can calculate
+40:02
+Guy Assa: the same of the blue class which is 0 in this example. Right? So I can take some up. All the blue classes, multiply them by how many blue classes I have, and this will be the the expected value of the blue class, and I can do it for all classes. The blue, the green, the red, and the yellow, and of course calculate the Sigma square as well. And because someone told me that it's parametric, and someone told me. It's Gaussian, so I can simply plot it right.
+40:11
+Guy Assa: This is the the formula of the Gaussian, so I can plot each one of them, and
+40:38
+Guy Assa: and then I have, and then I can take the likelihood right. If I have this equation, I can extract the likelihood. I simply put the X here, and I can get the number, and this would be the likelihood.
+40:44
+Guy Assa: So if I'm handling a parametric word.
+40:55
+Guy Assa: this is the world, everything is good, everything is. I can calculate everything that I want.
+40:59
+Guy Assa: But the problem is is, what if I have more than one feature? So up to now we've seen one feature, but we have only have more than one feature. So the situation is much more complex.
+41:06
+Guy Assa: And now we're talking about vectors and things like this. So just a reminder of covariance matrix because we'll talk about it in a minute. So what is a covariance? Covariance is the relations between 2 variables? Right? So in our case, it's the relations between
+41:18
+Guy Assa: 2 features, 2 attributes, how they influence each other.
+41:39
+Guy Assa: Right? So if we're looking at the diagonal, so the diagonal here simply one feature with itself. So if you put plug it in formula, so it's simply one feature with itself. So you'll get
+41:44
+Guy Assa: you'll get the covariance of the because you replace the Y here with X and X, and you'll get squared. So it's the covariance. And so we have the covariance we have the the covariance on the on the diagonal. The yeah. Sigma squared on the diagonal and just
+41:56
+Guy Assa: make sure that you understand why this and this are the same right? Because we can look only at one side on one half of the of the matrix, because it doesn't matter if I'm taking X, multiply y or y multiply X, it doesn't matter the direction, but we're getting the same. And just for a notion. So if we're putting 2 lines around the S. So it's the determinant
+42:17
+Guy Assa: and minus one. It's the inverse. You don't need to remember how to calculate the determinant or how to calculate the inverse. Just if you do.
+42:40
+Guy Assa: if you see the equation, just know how to use it with a package of a python, for example.
+42:50
+Guy Assa: So
+42:56
+Guy Assa: if we're handling more than one feature. So now we have, for example, 2 features. So we have here feature one, let's say, height and feature 2, let's say weights. And now we have this creature like 3D. Something which makes everything much more comp complicated, all the calculation
+42:57
+Guy Assa: much, much more complicated. And this is just in 2D. If we're taking it in like, we have 2 features in 3D. If we have much more features, it will be much more complicated. So
+43:16
+Guy Assa: this equation drawing this one, which is simply, as we've seen before for the Gaussian. But we, instead of Sigma Square, we're putting the determinant square. And instead of U, we're taking the expected value of this row. So it's now a vector and now we have, we can plug in the height and the weight. And it simply looks the same, but with a small adjustment.
+43:28
+Guy Assa: But this one is really complicated, and it makes our life
+43:54
+Guy Assa: worse. So we want some technique
+43:59
+Guy Assa: to make it easier. So what is the technique? A technique is naive, base. So before we go to naive base, we just say that for parametric we'll have the same problem for non parametric. Excuse me, but for non parametric, the
+44:02
+Guy Assa: the thing here is we can't know. We don't know how it looks like right? We can, we can plot our distribution. But I can tell you that this one is specifically looks like normal, because maybe it's log normal. Or maybe it's binomial or so and so on, so forth. So just
+44:20
+Guy Assa: if we're handling non-parametric, you need to plot it as such, and if you want to take the likelihood. So, for example, my X is 2. So 2 is here. So the probability of 2 is 0 point 2 5. So this is how I'm drawing the probability from nonparametric one. Okay. Great.
+44:35
+Guy Assa: So what is the naive, base.
+44:57
+Guy Assa: naive, base, telling me that instead of, for example, if I have data that is, looks as such. So I have attribute one and attribute 2 and attribute 3 and a label.
+45:00
+Guy Assa: Why, the native base is helping me, because
+45:12
+Guy Assa: for this, for example, I see I'm seeing a 1st instance, as let's say, that it's all a discrete to help us to understand it. So let's say, I'm seeing here. This can range between what is one to 10. This is one to 10, this is one to 5. This is all the possibilities I have. And here I have A or B. This is all the possibilities I have. So let's see, I'm seeing here 2 here, 3, and here one okay? And the label is a.
+45:15
+Guy Assa: So if I'm looking at as a
+45:44
+Guy Assa: altogether. So if I'm seeing a next example, for example, a 3, 3, 1
+45:49
+Guy Assa: and a it's not the same right? Because they're they. They have dependencies between one another. They're all together
+45:55
+Guy Assa: right, and I can't separate them. I can't say that this one is the same as this one, because they're different. What naive, base, telling me, naive, base, telling me, listen!
+46:04
+Guy Assa: Each attribute is independent. Look at them as independent. So, for example, if you've seen already one, so this one is, and this one are the same.
+46:14
+Guy Assa: and this one and this one are the same. Here you've seen something different.
+46:23
+Guy Assa: but you need to look at them. Each one is separate.
+46:27
+Guy Assa: Okay? So if here to see all the sample space, I need all the combinations of all the features in order to to be able to see one of them, which is I. I skipped it, but this is the the amount of samples I need in order to see all the combinations. So it's all the
+46:31
+Guy Assa: the amount of possibilities in a and others in a 1 and a 2 and a 3 multiplied by the number of labels I have A or B here, I need much less, because
+46:51
+Guy Assa: if I've seen it once. It's enough. I don't need to all of them together. Okay. So here the sample space that I need is reduced significantly, and it tells me also with the calculations and also with the theory when I want to. For example, draw, if I'm talking about, if I'm handling now a non-parametric one, so I know I don't need to see all the possibilities in order to be able to draw the histogram
+47:03
+Guy Assa: simply. If I've I've seen one here, it's enough. I don't need to see all the possibilities of all the 10 here and all the 10 here, together with this one.
+47:31
+Guy Assa: It's enough for me to see this. So it's also helping me for the parametric one, because the calculation it's much easier, and it's also helping me for the discrete one, because I can draw my histogram without seeing all the giant probabilities so simply if I want to draw it.
+47:39
+Guy Assa: So if I have 3 attributes, so I can draw 3 different tables. Okay, this is, attribute one. This is, attribute 2. And this is, attribute 3
+47:57
+Guy Assa: and simply for each one of them. Okay, I've seen one here and something here and like this, so I can draw for each one of them the the histogram of itself.
+48:08
+Guy Assa: And now, if I want to predict something. It it simply tells me, go to each one of them independently. So a 1, you got 5. Okay? Great.
+48:21
+Guy Assa: Yeah. The the new sample I'm seeing it's like 5, 2, 6.
+48:33
+Guy Assa: So go to 5. Here.
+48:38
+Guy Assa: go to 2 here and go to 6 and multiply them, and then you have your like, Hey, this is
+48:41
+Guy Assa: simply saying this, instead of drawing something in 3D. Which is or 4 d. Which is really complicated, and we don't know how to handle. Okay, so it helps us both in
+48:48
+Guy Assa: in the discrete one which is helping us.
+49:01
+Guy Assa: drawing this with less samples, and also with the continuous one with the parametric one that we are handling much easier problem, which is the multiplicity of something we know how to handle. Easy.
+49:04
+Guy Assa: Okay, so if we'll see?
+49:19
+Guy Assa: so you can ask yourself why it's working. So in practice, this algorithm works, well, okay, so just to, we will finish this example. So this one is for label A,
+49:22
+Guy Assa: okay? And I'm doing the same for label B,
+49:37
+Guy Assa: right? I'm doing the same 3 graphs for label B, and taking this sample and see how
+49:40
+Guy Assa: what's the likelihoods, and multiply them by
+49:48
+Guy Assa: by the numbers. And then I multiply by the prior right, because this is the prior of B, multiplied by the likelihood of these 3. And here I'm doing the same. And then I'm just comparing between them. And I'm seeing what is the maximum and taking maximum. And this is how I will classify this instance. Okay, so this is how we we can
+49:51
+Guy Assa: operate this in a simple way. So you can ask yourself why it's working. So in practice, the algorithm works pretty well, although we are really simplifying things, you'll say, Okay, attribute. One might be related to attribute 2. How you can just simplify it and say they have no relations. But they do have relations.
+50:12
+Guy Assa: But somehow this algorithms works pretty well on most data sets. So we can do this assumption. And one of the reasons is that we're just comparing A to B, we're not taking the absolute value and doing something with the absolute value if we had to do something with the absolute value. I guess this one, this method of name base won't work, but because we're comparing them
+50:30
+Guy Assa: and class A to class B,
+50:52
+Guy Assa: it does work right? So we can, because we're comparing the the posterior. So it works.
+50:54
+Guy Assa: So what we're doing. We're simply not looking at it as a long data set that they have all connections between them. Giving the label, we're saying, okay, we're separate, giving the label. I will plot all of them separately, and giving the label, I will plot all of them separately and calculate the maximum posterior. Yeah, the labels in the light base must be binary.
+51:02
+Guy Assa: How many you you have? Yeah.
+51:29
+Guy Assa: So let's see this this case in an example. So, as we said, if you want to, in a discrete case, you want to estimate them. So we need to plot this so how we could delete it. So, given a given a we can plot this one. I just simply count how many you have here and and divide it by number of instances I have. So we're now talking about one feature, so just to not to confuse you, we'll delete this.
+51:41
+Guy Assa: and we simply how I know what's the probability of, let's say, seeing 2. So I counted and I divided. So I go to here. So here I have. Let's say, 10 examples out of a I have, let's say, 30 example total. So the probability to see 2 is 10 divided by 30 x is what this equation say. Given a, yeah, I want to calculate the likelihood. So I'm doing this.
+52:09
+Guy Assa: Yes, in order to to get to extract the likelihood I have, I need to to work with some distribution. So I counted here. I have 10. So what is the probability to see? 10, I have total of 30. So it's 10 divided by 30. So it's 30%.
+52:38
+Guy Assa: So this is this equation. So let's look at an example. So
+52:53
+Guy Assa: let's say, I have good males and bad mails, and I want to classify the next one is good or bad, only by the header of the mail. Okay? So I have here. How many times I've seen deer, and I know it's I know it's good one, because this is the test, right? So it's all operate on the test. So I calculated, I draw this histogram, using the the my train. Excuse me.
+52:59
+Guy Assa: so I have 8 males that they were good, and the word deer appeared, and 5 males that the word friend appeared in it. They were good, and so on, so forth. And I had this and this words that they were like broad, or something that it wasn't a good male. Okay? So now I want to
+53:28
+Guy Assa: predict if this mail will be a good one or a bad one. So what's what should I do.
+53:53
+Guy Assa: How- how should I calculate it? Using this one using the up posterior? So I need to compare this one.
+54:02
+Guy Assa: Excuse me, maximum posterior. It's it's
+54:14
+Guy Assa: it's the you're taking. The prior. Multiply the likelihood of it.
+54:19
+Guy Assa: It's a maximum up posterior, which is what we. It's a the probability of
+54:22
+Guy Assa: the class. Given. The observation which equals to the probability of X. Given the
+54:30
+Guy Assa: the class multiplied by the class
+54:38
+Guy Assa: divided by something that we don't need, because, comparing 2 things that they're the same. Okay? So if we want to classify this really simple example. So okay, I'll 1st assume that I'm here. So I'm assuming I'm I'm in
+54:43
+Guy Assa: the good one in the blue one. So 1st in the probability of the good mail. So I'll simply count how many good males I have, and how many bad mails I have, and then I know how many good males I have. So here I have, I think.
+54:57
+Guy Assa: port how many
+55:11
+Guy Assa: the total, so the total I have, I think, 14 here, and here I have 7. So the prior is 14, divided by 21. So this is my prior of being here. Okay. So now I'm here. So I want to take how many deer I have. So I have 8 out of 14. So 8 out of 14 multiplied by friend, which is 5 out of 14. So I have
+55:14
+Guy Assa: 14 out of 21, which is the prior to be a good one right
+55:42
+Guy Assa: divide, multiplied by the number of deer I see, which is 8 out of 14. Multiply by friend, which is 5 out of 14. This is the this is the map, the maximum posterior, to be a good male
+55:47
+Guy Assa: and to be a a red mail, so the probability is.
+56:02
+Guy Assa: the prior 7 out of 21 multiplied by the chance to see a deal which is 2 out of 7.
+56:08
+Guy Assa: Multiply by the chance to see friend, which is one over 7. Then I can predict I'll take the bigger one, and it will be that my prediction. Okay, great. But what if I'll see the word? The the message, the header money lunch. So okay, here I can calculate the same. But here I'll have lunch.
+56:16
+Guy Assa: I don't have anything in lunch, so it would be 0. Then automatically it will go to 0. It doesn't matter everything here it will go to 0. Then something is corrupted. So basically, if I'm not seeing any word lunch, so I can predict anything, so it will always be 0. So I don't want to. I want to be able to somehow deal with cases like this.
+56:38
+Guy Assa: So we're doing something called Laplace estimation, which is really simple and straightforward. We're using this formula until now. We only used this formula
+56:58
+Guy Assa: count the number of currencies under the assumption of a divided by the total number, and now we will add one for any calculation. We will see in a minute we'll add one to the to the denominator, and for denominator, the denominator, we will add the size of all possibilities of the attribute. So let's see an example. It would be easier.
+57:10
+Guy Assa: So let's say, we have the data. And we have 2 treatments. We have treatment A and treatment B, and we want to predict the next person which treatment we want to give him. And we have the following data, the gender of the person, the blood pressure, the age. And, of course, which treatment they got. This is our trained data, and we want to use navebase to predict the next person. So this is the data we have.
+57:30
+Guy Assa: So, as you see in gender, we have
+57:57
+Guy Assa: 2 values, right? We have, or male or female. So the size of V is 2. Okay in blood pressure, we have 3 values. We have normal, high or low, so the size of V will be 3, and in age it will be young or old, so it will be 2. So just to connect it to here, it's this is the V,
+58:00
+Guy Assa: okay? So the fee is the how many values I have in each in each one of them.
+58:18
+Guy Assa: Okay, so now
+58:23
+Guy Assa: we're using the Laplace estimation. So now let's fill up this table. Because now I want to calculate the next person to predict. So let's calculate this one. So this is simply like doing all the 3 like doing 3 Instagrams right. Instagram for Gender, Instagram for blood pressure, Instagram for age. But without we're not plotting the Instagram, we're just doing it on a table which is pretty much the same.
+58:25
+Guy Assa: So what is the probability to see a, to see someone who got treatment? A.
+58:51
+Guy Assa: What is the probability?
+58:56
+Guy Assa: Looks like half.
+59:01
+Guy Assa: It's half right, because I'm just. I simply need to look how many people, how many patients got treatment? A. So I have 1, 2, 3, 4, 5, 6 out of 12. So the probability to see someone who got treatment. A is simply right.
+59:03
+Guy Assa: Okay? And this is also my label, right? So for my label, my prior.
+59:20
+Guy Assa: I'm not doing the Laplace estimation, because the Laplace estimation is given a but this is the A itself, so I don't need to do it for for the a for the prior.
+59:26
+Guy Assa: But now I will use the Laplace estimation. Okay, even if I don't know if if I have missing values, I want to use it, because I'm not paying anything for it to use it.
+59:35
+Guy Assa: Okay? So now we're looking up to here, we're look looking. Given a. So the 1st row is the gender given a okay so
+59:46
+Guy Assa: great. So now we can delete this row and look only at the A because we're giving a. So we know it's A, so it can't be this one and this one, because it's this is given. B, so we're looking at given A, and now we're looking only on the gender. So what is male? So I can delete these 2 and this 6 rows. So what is the probability to see gender, for example, male? Given a
+59:56
+Guy Assa: it's exactly have, because we have
+1:00:22
+Guy Assa: 3 males. Right? We have 1, 2, 3 males out of 6. But I want to add one to the denominator. And how how much do they? How many to the denominator?
+1:00:25
+Guy Assa: Awesome the possibility, the number of possibilities to get Jen so 2.
+1:00:39
+Guy Assa: So we'll the denominator will be 3 plus one, and the denominator will be 6 plus 2, which is half
+1:00:46
+Guy Assa: okay, and we'll do the same for female.
+1:00:53
+Guy Assa: This have to be complement to this one, because they're completing one each other. So it has to be F as well.
+1:00:56
+Guy Assa: Okay. So now for a high blood pressure. So now we're looking only
+1:01:03
+Guy Assa: at the upper half of the table, which is a and only on this score of blood pressure. So now I need to count how many high given? A. So I have 1, 2, a 1 sorry high, 1, 2, 3, 4. So I have 4 out of 6, but I need to add one to the denominator, and how many to the denominator.
+1:01:08
+Guy Assa: because I have normal, high, and low, so I need to add 3. So I have 4 plus one divided by 6 plus 3,
+1:01:31
+Guy Assa: and for no normal, I'm doing the same, and for low I don't have Low given a so it simply will be one over 9, and you can see that this row is summing up to 1 5 plus 3 plus one. It's 9. Okay. We're doing the same for young and old.
+1:01:41
+Guy Assa: It's exactly the same, and we're doing exactly the same for A, B. Now we we're looking at the second half table.
+1:02:01
+Guy Assa: and what we did here.
+1:02:09
+Guy Assa: What we've done here is simply plotting the 3 histograms for A is free histograms for B. And now we can predict.
+1:02:12
+Guy Assa: Now we can predict. So now, if I want to predict
+1:02:22
+Guy Assa: if I want to predict this next person which is made young and high, so what should I do
+1:02:27
+Guy Assa: I need to say, okay, let's assume.
+1:02:36
+Guy Assa: Let's assume it's a let's assume I'm giving him treatment a.
+1:02:40
+Guy Assa: It should it should get written. A. So what should I do 1st the the product of a which is one
+1:02:46
+Guy Assa: half right, and then I'm looking only about on a because now I'm assuming he's a so I can delete.
+1:02:52
+Guy Assa: We have this second part of the table. And now what is the probability of him being a male? Given a right? So it's half right. This is the this male. Given a. What is the probability of him being young? Given a half, and the probability of high blood pressure given a
+1:02:59
+Guy Assa: one over 9. And now I'm doing 5 over 9. And now I'm doing exactly the same for B.
+1:03:20
+Guy Assa: So the prior is also have
+1:03:27
+Guy Assa: what is the probability of him being male given B. Also half
+1:03:29
+Guy Assa: probability of being young over being 3 over 8 and the last 1 1 over 9. Now I'm asking, simply asking which one of them is bigger.
+1:03:35
+Guy Assa: And then I classify this one to get treatment A or treatment B, by the one that is bigger. So you can.
+1:03:45
+Guy Assa: You can normalize it. See it in your eyes. It will be much easier to normalize it. And then you can see that we have the probability to get treatment. A, given this data much higher than to get treatment. B, given this data.
+1:03:54
+Guy Assa: And okay, maybe we'll just the math doesn't go.
+1:04:16
+Guy Assa: maybe. But- but the the takeaway is that a it's bigger if you, if you just compare them. So if you
+1:04:22
+Guy Assa: and it will do the same for female, old and low. We can calculate it as well. And you'll get this number for a given this data and this number for B, given this data, and we compare them both. And we'll see that B is the winner. So we give this person treatment. B,
+1:04:49
+Guy Assa: okay, so
+1:05:09
+Guy Assa: remember what we've done here. We simply said, Okay, in this occasion we don't have distribution. So we're taking the discrete one. And I want to calculate each histogram separately or each probability space separately. I'm using name base in the calculation here the calculation and then using the Bayesian learner. I'm choosing. If I'm taking B or A, this is what I'm doing. Simply, someone gave me the distribution.
+1:05:11
+Guy Assa: And now I'm using naive base in order to simplify the calculation and using the Bayesian classifier. I'm choosing. If it's A or B. This is what I did, and it's exactly the same. If it's not.
+1:05:38
+Guy Assa: if it's not discrete. So someone will tell me. For example, it's Gaussian.
+1:05:51
+Guy Assa: I don't know how he knows this information, but I guess apparently he knows. So now I need to estimate.
+1:05:57
+Guy Assa: or that it gives me the Mu and the sigma, or if I need to estimate them, and then I can plot all the plots, and I'm doing the same. I'm using naive base to multiply all the features, all the Gaussian of the features, and using the Bayesian classifier. I can say if it's A or if it's B, the one that is bigger.
+1:06:04
+Guy Assa: good. This is
+1:06:25
+Guy Assa: naive, base using Bayesian. This is the all the material you need to know, and of course you can see naive base in other places, in machine learning or in
+1:06:27
+Guy Assa: in generally in computer science. But in our context, this is how we use it.
+1:06:40
+Guy Assa: That's it. Questions about naive base Bayesian classifier.
+1:06:47
+Guy Assa: So you understand, or you're given the information that you know the parametric, or you estimate them as a nonparametric, and then you do the calculations using naive base. And then you estimate the next person that will come using Bayesian classifier. That's it
+1:06:52
+Guy Assa: great. So let's do a really small recap for expectation maximization.
+1:07:07
+Guy Assa: I guess it won't be in the material. But just to connect the dots from last last course. So
+1:07:13
+Guy Assa: expectation maximization. Em algorithm, so if we have this data.
+1:07:23
+Guy Assa: and someone told me, these are the the yellow one, and these are the blue one. And someone will. Someone told me. Listen. They're both Gaussian. So I could plot this one right, because I can calculate the expected value and the variance for the
+1:07:29
+Guy Assa: and for the yellow, and do the same for the blue, and then I can use Bayesian classifier for the next dot that will come and use the maximum up posture. And just let's say that the dot will fall here so I can calculate it under the yellow and under the blue, and say which one is bigger. But if someone gives me this data, tell me, listen.
+1:07:46
+Guy Assa: You have 2 kind of things here, but I don't know which one is what you you do have 2, and they they both operate as a Gaussian, but I have no idea if they are the the blue or the yellow. So here I can't use simply
+1:08:08
+Guy Assa: let's say maximum posterior, because I don't know which dot belongs to to where I don't know. I don't know how to plot it.
+1:08:24
+Guy Assa: So expectation maximization is exactly this process
+1:08:31
+Guy Assa: which, trying to map each.to one of the 2 options. And I know somehow I have to
+1:08:35
+Guy Assa: 2 classes here. So the expectation. Maximization simply tells me, listen, these are yellow, these are blue. Now you can calculate the expected value and the variance. And now you can continue so expectation. Maximization is a step inside the algorithm. It's not the predicting itself. It's just simply helping me get the
+1:08:42
+Guy Assa: the information about each distribution. Okay, so this is expectation, because many students were confused last years, and they thought that with the expectation maximization, I need to predict something. I'm not predicting anything about the next instance, I'm only predicting something about the properties of the distribution, and then, after I predict it, I can
+1:09:05
+Guy Assa: use it as as my information and use it for for my prediction. Okay, so if you remember, you've seen this old faithful eruptions of in the Yosemite, or I don't know somewhere in a in a United States. And this is the process of like.
+1:09:27
+Guy Assa: you see where right? And this is how you. This is the real data that they separated into 2. They know that it came from 2 different times eruption times, but they didn't know how to separate them and using speculation maximization. They've been able to
+1:09:46
+Guy Assa: separate into 2 different. So it's a classifier. But it's not a predictor. The it helps you to determine the properties of the of the distribution.
+1:10:02
+Guy Assa: Okay? So each one of the groups or yes, of the classes of the classes. Yes. So here, I think it's log normal. So it's not a normal. It's log normal. And you've seen the example. Last semester of coins flipping a coins. So here we handle a binomial distribution. So it doesn't matter
+1:10:15
+Guy Assa: on which distribution you're laying. It's just a matter of the process itself. So if you remember that each one of them is tossing a coin 10 times, and you have 2 different coins in your population, and you don't know which coin you draw and you're tossing it. It's blank for you, but you know that you have 2 coins, and you know that they're both binomial, because this experiment is binomial. So now you're doing a process
+1:10:34
+Guy Assa: to estimate which one of them is the blue, the yellow, the green, and which one of them is the orange. So this is the expectation maximization, and after I'll estimate them and I'll get the for binomial. I need 2 things. I need the probability of heads for the green and for the orange, and I need it prior, like. I have a set of many coins, and I need it to know how many greens I have in the population, how many orange I have.
+1:10:59
+Guy Assa: So after I have these 2 information when I'll toss the next coin. I can calculate the maximum posterior and know if it's
+1:11:26
+Guy Assa: green or orange, and you have here all the calculations. I don't want to get too deep into it, because if you remember, great, and if no, so doesn't matter.
+1:11:35
+Guy Assa: and you have the calculation. And finally, you get this result, which tells you that this is the prior. Okay, I have more A than B or yellow, more orange than green, and to calculate the likelihood using the P. Because I don't know if you remember, the binomial looks like this, and I need P. And the probability to get heads.
+1:11:44
+Guy Assa: So this is just to connect the expectation maximization we did
+1:12:11
+Guy Assa: last year to here. So it helps me to determine, and the parameters for the for the distribution, and of course I can do it for each distribution, binomial or Gaussian, or whatever.
+1:12:15
+Guy Assa: Okay, so this is simply it. And if you want to convince yourself. You can see that this is the real world. And if we're doing this process iteratively, with initiating something randomly and then doing it iteratively. So at the end it will get parameters that are similar to the real one. It won't get to the exact
+1:12:30
+Guy Assa: exact values, but it will be close enough
+1:12:48
+Guy Assa: for us to classify them later.
+1:12:52
+Guy Assa: and from this we derive the likelihood, and then can estimate and to classify. And the next person, okay, so we can see, it's almost getting to the
+1:12:57
+Guy Assa: and to the nerve and the sigma of the of the correct of the real population.
+1:13:07
+Guy Assa: Okay, which is simply this.
+1:13:13
+Guy Assa: that's it. That was all for this class. So we we went over naive base. We used it to predict using a Bayesian classifier. And we've seen
+1:13:16
+Guy Assa: a short recap of explication maximization which won't be as part of the material, I think, in the. If it will be so, we'll go over it more deeply. But I think it won't be as part of the material to the exam. So just
+1:13:28
+Guy Assa: it was until now. So if you'll see it in the exam, so understand that we we did go over it last year, but because all of you did it last semester. So we skipped it, and we
+1:13:41
+Guy Assa: we won't see it in the exam.
+1:13:52
+Guy Assa: Questions great. So see you next week.
+1:13:54
+Guy Assa: Thank you.
+1:14:00
+Guy Assa: But.
+1:14:06
